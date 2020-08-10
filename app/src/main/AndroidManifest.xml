@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jess.wod">
+    package="com.jess.wodtimer">
 
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="com.jess.wod.JessApplication"
+        android:name="com.jess.wodtimer.JessApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,8 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.jess.wod.presentation.main.MainActivity"
+            android:name=".presentation.record.RecordActivity"
+            android:theme="@style/RecordTheme"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +30,7 @@
         </activity>
 
         <activity
-            android:name="com.jess.wod.presentation.record.RecordActivity"
+            android:name=".presentation.main.MainActivity"
             android:launchMode="singleTop" />
     </application>
 

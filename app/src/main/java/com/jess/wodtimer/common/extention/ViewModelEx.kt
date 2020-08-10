@@ -1,4 +1,4 @@
-package com.jess.wod.common.extention
+package com.jess.wodtimer.common.extention
 
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel

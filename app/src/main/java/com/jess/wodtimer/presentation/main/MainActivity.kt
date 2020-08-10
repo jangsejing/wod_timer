@@ -1,11 +1,11 @@
-package com.jess.wod.presentation.main
+package com.jess.wodtimer.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.jess.wod.R
-import com.jess.wod.presentation.record.RecordActivity
+import com.jess.wodtimer.R
+import com.jess.wodtimer.presentation.record.RecordActivity
 import kotlinx.android.synthetic.main.main_activity.*
 
 /**

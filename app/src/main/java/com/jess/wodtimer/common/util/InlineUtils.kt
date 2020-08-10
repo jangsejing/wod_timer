@@ -1,4 +1,4 @@
-package com.jess.wod.common.util
+package com.jess.wodtimer.common.util
 
 import timber.log.Timber
 

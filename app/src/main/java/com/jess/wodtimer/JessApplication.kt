@@ -1,4 +1,4 @@
-package com.jess.wod
+package com.jess.wodtimer
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -1,16 +1,19 @@
-package com.jess.wod.presentation.record
+package com.jess.wodtimer.presentation.record
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import com.jess.wod.R
-import com.jess.wod.common.base.BaseActivity
-import com.jess.wod.common.manager.PermissionManager
-import com.jess.wod.databinding.RecordActivityBinding
+import com.jess.wodtimer.R
+import com.jess.wodtimer.common.base.BaseActivity
+import com.jess.wodtimer.common.manager.PermissionManager
+import com.jess.wodtimer.common.util.DeviceUtils
+import com.jess.wodtimer.databinding.RecordActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
 import timber.log.Timber
@@ -22,7 +25,8 @@ import java.util.concurrent.Executors
  * @since 2020.06.12
  */
 @AndroidEntryPoint
-class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>() {
+class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
+    View.OnClickListener {
 
     override val layoutRes get() = R.layout.record_activity
     override val viewModelClass get() = RecordViewModel::class
@@ -32,11 +36,29 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>() {
     }
 
     override fun initLayout() {
-
+        arrayOf(cl_record, iv_gallery, iv_setting).forEach {
+            it.setOnClickListener(this)
+        }
     }
 
     override fun onCreated(savedInstanceState: Bundle?) {
+        checkPermission()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        DeviceUtils.setImmersiveMode(this)
+    }
+
+    override fun onDestroy() {
+        cameraExecutor.shutdown()
+        super.onDestroy()
+    }
+
+    /**
+     * 퍼미션 체크
+     */
+    private fun checkPermission() {
         // 권한 요청
         PermissionManager.request(
             this,
@@ -45,21 +67,17 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>() {
         ) {
             startCamera()
         }
-
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    override fun onDestroy() {
-        cameraExecutor.shutdown()
-        super.onDestroy()
-    }
-
+    /**
+     * 카메라
+     */
     private fun startCamera() {
+
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        if (cameraProviderFuture.isDone) {
+            return
+        }
 
         cameraProviderFuture.addListener(Runnable {
             // Used to bind the lifecycle of cameras to the lifecycle owner
@@ -89,5 +107,30 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>() {
             }
 
         }, ContextCompat.getMainExecutor(this))
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.cl_record -> {
+                // 녹화
+                checkPermission()
+            }
+
+            R.id.iv_gallery -> {
+                // 갤러리
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("content://media/internal/images/media")
+                    )
+                )
+            }
+
+            R.id.iv_setting -> {
+                // 설정
+
+            }
+
+        }
     }
 }

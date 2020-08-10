@@ -1,4 +1,4 @@
-package com.jess.wod.common.manager
+package com.jess.wodtimer.common.manager
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import com.jess.wod.R
+import com.jess.wodtimer.R
 
 
 /**
@@ -68,7 +68,6 @@ object PermissionManager {
                 )
                 setPositiveButton(android.R.string.ok) { dialog, which ->
                     moveSystemSetting(it)
-                    activity.finish()
                 }
                 show()
             }

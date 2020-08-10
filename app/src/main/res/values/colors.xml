@@ -7,8 +7,11 @@
     <color name="brand_black">#000000</color>
     <color name="brand_blue">#00c1ff</color>
     <color name="brand_orange">#ff4200</color>
+    <color name="brand_red">#f45858</color>
     <color name="brand_mint">#00cdc6</color>
     <color name="brand_white">#ffffff</color>
+    
+    <color name="brand_black_alpha_5">#80000000</color>
 
     <color name="text_grey">#858585</color>
     <color name="text_baby">#ffabb1</color>

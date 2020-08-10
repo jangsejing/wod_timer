@@ -7,7 +7,7 @@ Kotlin
 MVVM  
 Model - View - ViewModel   
 Repository - DataSource   
-![arcithecture](https://github.com/jess-jang/CrossfitTimer/blob/master/arcithecture_plan.png)
+![arcithecture](https://github.com/jess-jang/WODTimer/blob/master/arcithecture_plan.png)
 
 ## JetPack
 AndroidX, AAC ViewModel, DataBinding, Lifecycle, LiveData, ListAdapter
