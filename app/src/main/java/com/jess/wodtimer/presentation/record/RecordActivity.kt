@@ -58,7 +58,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     /**
      * 퍼미션 체크
      */
-    private fun checkPermission() {
+    private fun checkPermission(listener: (() -> Unit)? = null) {
         // 권한 요청
         PermissionManager.request(
             this,
@@ -66,6 +66,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             getString(R.string.permission_should_allow_camera)
         ) {
             startCamera()
+            listener?.invoke()
         }
     }
 
@@ -113,7 +114,9 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         when (v?.id) {
             R.id.cl_record -> {
                 // 녹화
-                checkPermission()
+                checkPermission {
+                    vm.onRecord()
+                }
             }
 
             R.id.iv_gallery -> {

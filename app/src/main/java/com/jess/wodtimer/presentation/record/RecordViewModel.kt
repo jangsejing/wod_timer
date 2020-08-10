@@ -10,10 +10,16 @@ class RecordViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     override var baseDataSource: BaseDataSource? = dataSource
+
+    // 카운트 다운 데이터
+    var countDownData: Int = 0
+        set(value) {
+            field = value
+            dataSource.countDownValue = field
+        }
     val countDown = dataSource.countDown
 
     fun onRecord() {
-
+        dataSource.onRecord()
     }
-
 }
