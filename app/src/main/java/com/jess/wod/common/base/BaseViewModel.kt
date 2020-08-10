@@ -1,4 +1,4 @@
-package com.jess.crossfit.common.base
+package com.jess.wod.common.base
 
 import androidx.lifecycle.ViewModel
 

@@ -1,11 +1,11 @@
-package com.jess.crossfit.common.base
+package com.jess.wod.common.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.jess.crossfit.BR
-import com.jess.crossfit.common.extention.createViewModel
+import com.jess.wod.BR
+import com.jess.wod.common.extention.createViewModel
 import kotlin.reflect.KClass
 
 /**

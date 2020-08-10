@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.jess.crossfit.presentation.record.RecordViewModel" />
+            type="com.jess.wod.presentation.record.RecordViewModel" />
 
     </data>
 

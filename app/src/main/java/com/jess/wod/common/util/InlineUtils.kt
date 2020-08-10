@@ -1,4 +1,4 @@
-package com.jess.crossfit.common.util
+package com.jess.wod.common.util
 
 import timber.log.Timber
 

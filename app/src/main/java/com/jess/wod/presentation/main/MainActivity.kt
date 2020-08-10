@@ -1,11 +1,11 @@
-package com.jess.crossfit.presentation.main
+package com.jess.wod.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.jess.crossfit.R
-import com.jess.crossfit.presentation.record.RecordActivity
+import com.jess.wod.R
+import com.jess.wod.presentation.record.RecordActivity
 import kotlinx.android.synthetic.main.main_activity.*
 
 /**

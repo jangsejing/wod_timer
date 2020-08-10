@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WODTimer</string>
+    <string name="permission_should_allow">권한을 수락해야합니다.</string>
+    <string name="permission_should_allow_camera">카메라 권한을 수락해야합니다.</string>
+</resources>

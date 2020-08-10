@@ -1,2 +1,2 @@
-rootProject.name='Crossfit'
+rootProject.name='WODTimer'
 include ':app'

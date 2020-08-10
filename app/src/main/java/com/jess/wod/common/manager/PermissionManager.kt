@@ -1,4 +1,4 @@
-package com.jess.crossfit.common.manager
+package com.jess.wod.common.manager
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import com.jess.crossfit.R
+import com.jess.wod.R
 
 
 /**
@@ -61,16 +61,14 @@ object PermissionManager {
             AlertDialog.Builder(activity).run {
                 setMessage(
                     if (deniedMessage.isNullOrEmpty()) {
-                        activity.getString(R.string.Permission_should_allow)
+                        activity.getString(R.string.permission_should_allow)
                     } else {
                         deniedMessage
                     }
                 )
                 setPositiveButton(android.R.string.ok) { dialog, which ->
-
-                }
-                setNegativeButton(android.R.string.cancel) { dialog, which ->
                     moveSystemSetting(it)
+                    activity.finish()
                 }
                 show()
             }

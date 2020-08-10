@@ -1,4 +1,4 @@
-package com.jess.crossfit
+package com.jess.wod
 
 import org.junit.Test
 

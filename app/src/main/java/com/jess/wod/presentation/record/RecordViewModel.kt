@@ -1,9 +1,9 @@
-package com.jess.crossfit.presentation.record
+package com.jess.wod.presentation.record
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.jess.crossfit.common.base.BaseViewModel
+import com.jess.wod.common.base.BaseViewModel
 
 class RecordViewModel @ViewModelInject constructor(
 

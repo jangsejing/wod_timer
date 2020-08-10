@@ -1,4 +1,4 @@
-# CrossfitTimer
+# WODTimer
 
 ## Langauge
 Kotlin
