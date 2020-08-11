@@ -1,7 +1,7 @@
 package com.jess.wodtimer.di.module
 
-import com.jess.wodtimer.di.DispatcherProvider
-import com.jess.wodtimer.di.DispatcherProviderImpl
+import com.jess.wodtimer.di.provider.DispatcherProvider
+import com.jess.wodtimer.di.provider.DispatcherProviderImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

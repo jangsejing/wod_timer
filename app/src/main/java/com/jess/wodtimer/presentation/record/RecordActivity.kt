@@ -5,24 +5,21 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
+import com.jess.wodtimer.common.manager.CameraManager
 import com.jess.wodtimer.common.manager.PermissionManager
 import com.jess.wodtimer.common.util.DeviceUtils
 import com.jess.wodtimer.databinding.RecordActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
-import timber.log.Timber
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
  * @author jess
- * @since 2020.06.12
+ * @since 2020.08.11
  */
 @AndroidEntryPoint
 class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
@@ -30,6 +27,10 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
     override val layoutRes get() = R.layout.record_activity
     override val viewModelClass get() = RecordViewModel::class
+
+    private val cameraManager: CameraManager by lazy {
+        CameraManager(this, camera)
+    }
 
     private val cameraExecutor: ExecutorService by lazy {
         Executors.newSingleThreadExecutor()
@@ -42,7 +43,14 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     }
 
     override fun onCreated(savedInstanceState: Bundle?) {
+        initObserve()
         checkPermission()
+    }
+
+    private fun initObserve() {
+        vm.isPlay.observe(this, Observer {
+
+        })
     }
 
     override fun onResume() {
@@ -65,49 +73,9 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             Manifest.permission.CAMERA,
             getString(R.string.permission_should_allow_camera)
         ) {
-            startCamera()
+            cameraManager.init()
             listener?.invoke()
         }
-    }
-
-    /**
-     * 카메라
-     */
-    private fun startCamera() {
-
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        if (cameraProviderFuture.isDone) {
-            return
-        }
-
-        cameraProviderFuture.addListener(Runnable {
-            // Used to bind the lifecycle of cameras to the lifecycle owner
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-            // Preview
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(camera.createSurfaceProvider())
-                }
-
-            // Select back camera as a default
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            try {
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll()
-
-                // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview
-                )
-
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-
-        }, ContextCompat.getMainExecutor(this))
     }
 
     override fun onClick(v: View?) {

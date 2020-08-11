@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.jess.wodtimer.BR
-import com.jess.wodtimer.common.extention.createViewModel
+import com.jess.wodtimer.common.extension.createViewModel
 import kotlin.reflect.KClass
 
 /**
  * @author jess
- * @since 2020.06.12
+ * @since 2020.08.11
  */
 abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity() {
 

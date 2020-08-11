@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">WODTimer</string>
+
+    <string name="permission_should_allow">Permissions should be allow</string>
+    <string name="permission_should_allow_camera">Camera permissions should be allow</string>
+
+    <string name="record_format">%02d:%02d</string>
+
+</resources>

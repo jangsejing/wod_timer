@@ -1,4 +1,4 @@
-package com.jess.wodtimer.di
+package com.jess.wodtimer.di.provider
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -7,7 +7,7 @@ import kotlin.coroutines.CoroutineContext
 
 /**
  * @author jess
- * @since 2020.06.12
+ * @since 2020.08.11
  */
 interface DispatcherProvider {
     val job: Job
@@ -16,7 +16,8 @@ interface DispatcherProvider {
     fun default(): CoroutineContext
 }
 
-class DispatcherProviderImpl @Inject constructor() : DispatcherProvider {
+class DispatcherProviderImpl @Inject constructor() :
+    DispatcherProvider {
 
     override val job: Job = Job()
     override fun main(): CoroutineContext = Dispatchers.Main + job

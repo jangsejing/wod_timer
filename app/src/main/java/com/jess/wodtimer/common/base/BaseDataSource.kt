@@ -2,7 +2,7 @@ package com.jess.wodtimer.common.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.jess.wodtimer.di.DispatcherProvider
+import com.jess.wodtimer.di.provider.DispatcherProvider
 
 interface BaseDataSource {
 

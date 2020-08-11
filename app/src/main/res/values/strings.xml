@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">WODTimer</string>
 
-    <string name="permission_should_allow">Permissions should be allow</string>
-    <string name="permission_should_allow_camera">Camera permissions should be allow</string>
+    <string name="app_name">WODTimer</string>
+    <string name="permission_should_allow">권한을 수락해야합니다.</string>
+    <string name="permission_should_allow_camera">카메라 권한을 수락해야합니다.</string>
+
+    <string name="record_format">%02d:%02d</string>
+
 </resources>

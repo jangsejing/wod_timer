@@ -6,7 +6,7 @@ import timber.log.Timber
 
 /**
  * @author jess
- * @since 2020.06.12
+ * @since 2020.08.11
  */
 @HiltAndroidApp
 class JessApplication : Application() {

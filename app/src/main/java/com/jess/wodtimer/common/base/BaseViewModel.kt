@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 
 /**
  * @author jess
- * @since 2020.06.12
+ * @since 2020.08.11
  */
 abstract class BaseViewModel : ViewModel() {
 

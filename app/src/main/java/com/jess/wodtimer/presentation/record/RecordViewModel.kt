@@ -10,16 +10,18 @@ class RecordViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     override var baseDataSource: BaseDataSource? = dataSource
+    val time = dataSource.time
+    val isPlay  = dataSource.isPlay
 
     // 카운트 다운 데이터
-    var countDownData: Int = 0
+    var countDownTime: Int = 0
         set(value) {
             field = value
-            dataSource.countDownValue = field
+            dataSource.countDownTime = field
         }
     val countDown = dataSource.countDown
 
     fun onRecord() {
-        dataSource.onRecord()
+        dataSource.onCountDown()
     }
 }
