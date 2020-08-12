@@ -6,4 +6,7 @@
     <dimen name="dp12">12dp</dimen>
     <dimen name="dp14">14dp</dimen>
 
+    <dimen name="record_bottom_height">150dp</dimen>
+
+
 </resources>

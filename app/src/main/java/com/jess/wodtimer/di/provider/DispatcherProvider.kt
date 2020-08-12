@@ -10,18 +10,22 @@ import kotlin.coroutines.CoroutineContext
  * @since 2020.08.11
  */
 interface DispatcherProvider {
-    val job: Job
-    fun main(): CoroutineContext
-    fun io(): CoroutineContext
-    fun default(): CoroutineContext
+    var job: Job
+    val main: CoroutineContext
+    val io: CoroutineContext
+    val default: CoroutineContext
+    fun createJob()
 }
 
-class DispatcherProviderImpl @Inject constructor() :
-    DispatcherProvider {
+class DispatcherProviderImpl @Inject constructor() : DispatcherProvider {
 
-    override val job: Job = Job()
-    override fun main(): CoroutineContext = Dispatchers.Main + job
-    override fun io(): CoroutineContext = Dispatchers.IO + job
-    override fun default(): CoroutineContext = Dispatchers.Default + job
+    override var job: Job = Job()
+    override val main: CoroutineContext get() = Dispatchers.Main + job
+    override val io: CoroutineContext get() = Dispatchers.IO + job
+    override val default: CoroutineContext get() = Dispatchers.Default + job
+
+    override fun createJob() {
+        job = Job()
+    }
 
 }

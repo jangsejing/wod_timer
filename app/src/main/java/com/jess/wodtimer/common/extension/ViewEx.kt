@@ -3,7 +3,9 @@ package com.jess.wodtimer.common.extension
 import android.os.Build
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import kotlin.math.roundToInt
 
 /**
  * @author jess
@@ -31,5 +33,23 @@ fun View.setCircleRipple() = with(TypedValue()) {
         foreground = ContextCompat.getDrawable(context, resourceId)
     } else {
         setBackgroundResource(resourceId)
+    }
+}
+
+/**
+ * 하단 마진
+ */
+fun View.setMarginBottom(
+    margin: Int?
+) {
+    margin?.let {
+        val layoutParams = layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.setMargins(
+            layoutParams.leftMargin,
+            layoutParams.topMargin,
+            layoutParams.rightMargin,
+            margin
+        )
+        this.layoutParams = layoutParams
     }
 }

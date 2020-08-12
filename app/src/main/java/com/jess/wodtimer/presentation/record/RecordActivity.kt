@@ -8,6 +8,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
+import com.jess.wodtimer.common.extension.setMarginBottom
 import com.jess.wodtimer.common.manager.CameraManager
 import com.jess.wodtimer.common.manager.PermissionManager
 import com.jess.wodtimer.common.util.DeviceUtils
@@ -37,7 +38,11 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     }
 
     override fun initLayout() {
-        arrayOf(cl_record, iv_gallery, iv_setting).forEach {
+
+        // 네비게이션 바 높이 만큼 마진 설정
+        cl_bottom.setMarginBottom(DeviceUtils.getNavigationBarHeight(this))
+
+        arrayOf(cl_record, cl_stop, iv_gallery, iv_setting).forEach {
             it.setOnClickListener(this)
         }
     }
@@ -55,7 +60,6 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
     override fun onResume() {
         super.onResume()
-        DeviceUtils.setImmersiveMode(this)
     }
 
     override fun onDestroy() {
@@ -87,6 +91,11 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                 }
             }
 
+            R.id.cl_stop -> {
+                // 정지
+                vm.onStop()
+            }
+
             R.id.iv_gallery -> {
                 // 갤러리
                 startActivity(
@@ -99,7 +108,12 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
             R.id.iv_setting -> {
                 // 설정
-
+                SettingBottomDialog(this).run {
+                    setOnDismissListener {
+//                        DeviceUtils.setImmersiveMode(this@RecordActivity)
+                    }
+                    show()
+                }
             }
 
         }

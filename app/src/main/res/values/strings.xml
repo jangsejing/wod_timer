@@ -1,9 +1,14 @@
 <resources>
 
     <string name="app_name">WODTimer</string>
+    <string name="seconds">%d초</string>
+
     <string name="permission_should_allow">권한을 수락해야합니다.</string>
     <string name="permission_should_allow_camera">카메라 권한을 수락해야합니다.</string>
 
     <string name="record_format">%02d:%02d</string>
+    <string name="record_setting_submit">적용</string>
+    <string name="record_setting_countdown">카운트다운</string>
+    <string name="record_setting_title">제목</string>
 
 </resources>

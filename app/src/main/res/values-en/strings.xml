@@ -1,10 +1,13 @@
 <resources>
 
     <string name="app_name">WODTimer</string>
+    <string name="seconds">%ds</string>
 
     <string name="permission_should_allow">Permissions should be allow</string>
     <string name="permission_should_allow_camera">Camera permissions should be allow</string>
 
     <string name="record_format">%02d:%02d</string>
-
+    <string name="record_setting_submit">Submit</string>
+    <string name="record_setting_countdown">Countdown</string>
+    <string name="record_setting_title">Title</string>
 </resources>

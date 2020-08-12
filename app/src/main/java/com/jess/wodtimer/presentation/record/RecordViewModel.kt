@@ -10,8 +10,14 @@ class RecordViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     override var baseDataSource: BaseDataSource? = dataSource
+
     val time = dataSource.time
-    val isPlay  = dataSource.isPlay
+    val isPlay = dataSource.isPlay
+    val isCountDown = dataSource.isCountDown
+
+    init {
+        dataSource.reset()
+    }
 
     // 카운트 다운 데이터
     var countDownTime: Int = 0
@@ -23,5 +29,9 @@ class RecordViewModel @ViewModelInject constructor(
 
     fun onRecord() {
         dataSource.onCountDown()
+    }
+
+    fun onStop() {
+        dataSource.onStop()
     }
 }
