@@ -2,9 +2,10 @@
 
     <string name="app_name">WODTimer</string>
     <string name="seconds">%d초</string>
+    <string name="setting">설정</string>
 
-    <string name="permission_should_allow">권한을 수락해야합니다.</string>
-    <string name="permission_should_allow_camera">카메라 권한을 수락해야합니다.</string>
+    <string name="permission_denied_title">권한 거부</string>
+    <string name="permission_denied_message">권한을 거부하면이 서비스를 사용할 수 없습니다. [설정] > [권한]에서 권한을 설정하세요.</string>
 
     <string name="record_format">%02d:%02d</string>
     <string name="record_setting_submit">적용</string>

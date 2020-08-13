@@ -6,11 +6,11 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
 import com.jess.wodtimer.common.extension.setMargin
-import com.jess.wodtimer.common.extension.setMarginBottom
 import com.jess.wodtimer.common.manager.CameraManager
 import com.jess.wodtimer.common.manager.PermissionManager
 import com.jess.wodtimer.common.util.DeviceUtils
@@ -18,9 +18,7 @@ import com.jess.wodtimer.databinding.RecordActivityBinding
 import com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
-import timber.log.Timber
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+
 
 /**
  * @author jess
@@ -39,7 +37,6 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        setOrientationMargin()
     }
 
     override fun initLayout() {
@@ -50,7 +47,9 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
     override fun onCreated(savedInstanceState: Bundle?) {
         initObserve()
-        checkPermission()
+        checkPermissions {
+            cameraManager.init()
+        }
     }
 
     private fun initObserve() {
@@ -90,14 +89,22 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     /**
      * 퍼미션 체크
      */
-    private fun checkPermission(listener: (() -> Unit)? = null) {
-        // 권한 요청
+    private fun checkPermissions(listener: (() -> Unit)? = null) {
+        if (PermissionManager.isGranted(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            )
+        ) {
+            listener?.invoke()
+            return
+        }
+
         PermissionManager.request(
             this,
-            Manifest.permission.CAMERA,
-            getString(R.string.permission_should_allow_camera)
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
         ) {
-            cameraManager.init()
             listener?.invoke()
         }
     }
@@ -105,8 +112,10 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.cl_record -> {
-                // 녹화
-                checkPermission {
+                checkPermissions {
+                    if (!cameraManager.isDone) {
+                        cameraManager.init()
+                    }
                     vm.onRecord()
                 }
             }
@@ -136,7 +145,6 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                     }
                 }
             }
-
         }
     }
 }

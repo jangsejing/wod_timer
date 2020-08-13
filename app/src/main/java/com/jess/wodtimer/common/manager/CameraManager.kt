@@ -7,9 +7,11 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
+import com.gun0912.tedpermission.TedPermission
 import timber.log.Timber
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.jar.Manifest
 
 /**
  * 카메라
@@ -29,37 +31,31 @@ class CameraManager(
         ProcessCameraProvider.getInstance(activity)
     }
 
-    private val cameraExecutor: ExecutorService by lazy {
-        Executors.newSingleThreadExecutor()
-    }
+    private val cameraExecutor = Executors.newSingleThreadExecutor()
 
     val isDone: Boolean get() = cameraProviderFuture.isDone ?: false
-    val isCancelled: Boolean get() = cameraProviderFuture.isCancelled ?: false
+//    val isCancelled: Boolean get() = cameraProviderFuture.isCancelled ?: false
 
     fun onResume() {
         Timber.d("onResume()")
-        Timber.d("isDone $isDone")
-        Timber.d("isCancelled $isCancelled")
         init()
     }
 
     fun onPause() {
         Timber.d("onPause()")
-        Timber.d("isDone $isDone")
-        Timber.d("isCancelled $isCancelled")
     }
 
     fun onDestroy() {
         cameraExecutor.shutdown()
     }
 
-    fun init(isForce: Boolean = false) {
+    fun init() {
+
+        if (!PermissionManager.isGranted(activity, android.Manifest.permission.CAMERA)) {
+            return
+        }
 
         cameraProviderFuture.run {
-
-            if (isDone && !isForce) {
-                return
-            }
 
             addListener(Runnable {
                 // Used to bind the lifecycle of cameras to the lifecycle owner

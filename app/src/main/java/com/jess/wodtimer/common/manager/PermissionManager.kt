@@ -1,12 +1,9 @@
 package com.jess.wodtimer.common.manager
 
-import android.app.AlertDialog
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings
-import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
+import android.Manifest
+import android.content.Context
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import com.jess.wodtimer.R
 
 
@@ -19,75 +16,31 @@ import com.jess.wodtimer.R
 object PermissionManager {
 
     /**
+     * Permission이 허용되어 있는지 여부
+     */
+    fun isGranted(context: Context, vararg permissions: String): Boolean {
+        return TedPermission.isGranted(context, *permissions)
+    }
+
+    /**
      * 권한 요청
-     *
-     * @param activity
-     * @param permission
-     * @param deniedMessage
-     * @param onGranted
      */
-    fun request(
-        activity: ComponentActivity?,
-        permission: String?,
-        deniedMessage: String? = null,
-        onGranted: () -> Unit
-    ) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            onGranted.invoke()
-            return
-        }
-
-        if (activity == null || permission.isNullOrEmpty()) {
-            return
-        }
-
-        activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                onGranted.invoke()
-            } else {
-                onDenied(activity, deniedMessage)
-            }
-        }.launch(permission)
-    }
-
-    /**
-     * 권한 거부
-     *
-     * @param activity
-     * @param deniedMessage
-     */
-    private fun onDenied(activity: ComponentActivity?, deniedMessage: String?) {
-        activity?.let {
-            AlertDialog.Builder(activity).run {
-                setMessage(
-                    if (deniedMessage.isNullOrEmpty()) {
-                        activity.getString(R.string.permission_should_allow)
-                    } else {
-                        deniedMessage
-                    }
-                )
-                setPositiveButton(android.R.string.ok) { dialog, which ->
-                    moveSystemSetting(it)
+    fun request(context: Context, vararg permissions: String, listener: (() -> Unit)? = null) {
+        TedPermission.with(context)
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    listener?.invoke()
                 }
-                show()
-            }
-        }
-    }
 
-    /**
-     * 시스템 설정
-     *
-     * @param activity
-     */
-    private fun moveSystemSetting(activity: ComponentActivity?) {
-        activity?.let {
-            val intent =
-                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    .setData(Uri.parse("package:" + activity.packageName))
-            activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
 
-            }.launch(intent)
-        }
+                }
+            })
+            .setDeniedTitle(R.string.permission_denied_title)
+            .setDeniedMessage(R.string.permission_denied_message)
+            .setGotoSettingButtonText(R.string.setting)
+            .setPermissions(*permissions)
+            .check();
     }
 
 }

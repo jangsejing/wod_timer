@@ -2,9 +2,10 @@
 
     <string name="app_name">WODTimer</string>
     <string name="seconds">%ds</string>
+    <string name="setting">Settings</string>
 
-    <string name="permission_should_allow">Permissions should be allow</string>
-    <string name="permission_should_allow_camera">Camera permissions should be allow</string>
+    <string name="permission_denied_title">Permission denied</string>
+    <string name="permission_denied_message">If you reject permission, you can not use this service Please turn on permissions at [Setting] > [Permission]</string>
 
     <string name="record_format">%02d:%02d</string>
     <string name="record_setting_submit">Submit</string>
