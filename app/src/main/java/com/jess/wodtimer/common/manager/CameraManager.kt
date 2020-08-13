@@ -8,6 +8,8 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
 import timber.log.Timber
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * 카메라
@@ -23,15 +25,37 @@ class CameraManager(
     private val preview: PreviewView
 ) {
 
-    private val cameraProviderFuture: ListenableFuture<ProcessCameraProvider>? by lazy {
+    private val cameraProviderFuture: ListenableFuture<ProcessCameraProvider> by lazy {
         ProcessCameraProvider.getInstance(activity)
     }
 
-//    private val isDone: Boolean get() = cameraProviderFuture?.isDone ?: false
+    private val cameraExecutor: ExecutorService by lazy {
+        Executors.newSingleThreadExecutor()
+    }
+
+    val isDone: Boolean get() = cameraProviderFuture.isDone ?: false
+    val isCancelled: Boolean get() = cameraProviderFuture.isCancelled ?: false
+
+    fun onResume() {
+        Timber.d("onResume()")
+        Timber.d("isDone $isDone")
+        Timber.d("isCancelled $isCancelled")
+        init()
+    }
+
+    fun onPause() {
+        Timber.d("onPause()")
+        Timber.d("isDone $isDone")
+        Timber.d("isCancelled $isCancelled")
+    }
+
+    fun onDestroy() {
+        cameraExecutor.shutdown()
+    }
 
     fun init(isForce: Boolean = false) {
 
-        cameraProviderFuture?.run {
+        cameraProviderFuture.run {
 
             if (isDone && !isForce) {
                 return

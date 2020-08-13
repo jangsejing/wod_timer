@@ -2,12 +2,14 @@ package com.jess.wodtimer.presentation.record.view
 
 import android.Manifest
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
+import com.jess.wodtimer.common.extension.setMargin
 import com.jess.wodtimer.common.extension.setMarginBottom
 import com.jess.wodtimer.common.manager.CameraManager
 import com.jess.wodtimer.common.manager.PermissionManager
@@ -16,6 +18,7 @@ import com.jess.wodtimer.databinding.RecordActivityBinding
 import com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
+import timber.log.Timber
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -34,15 +37,12 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         CameraManager(this, camera)
     }
 
-    private val cameraExecutor: ExecutorService by lazy {
-        Executors.newSingleThreadExecutor()
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        setOrientationMargin()
     }
 
     override fun initLayout() {
-
-        // 네비게이션 바 높이 만큼 마진 설정
-        cl_bottom.setMarginBottom(DeviceUtils.getNavigationBarHeight(this))
-
         arrayOf(cl_record, cl_stop, iv_gallery, iv_setting).forEach {
             it.setOnClickListener(this)
         }
@@ -54,18 +54,37 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     }
 
     private fun initObserve() {
-        vm.isPlay.observe(this, Observer {
 
-        })
     }
 
     override fun onResume() {
         super.onResume()
+        setOrientationMargin()
+        cameraManager.onResume()
+    }
+
+    override fun onPause() {
+        cameraManager.onPause()
+        super.onPause()
     }
 
     override fun onDestroy() {
-        cameraExecutor.shutdown()
+        cameraManager.onDestroy()
         super.onDestroy()
+    }
+
+    /**
+     * 가로, 세로에 따른 마진 설정
+     */
+    private fun setOrientationMargin() {
+        // 네비게이션 바 높이 만큼 마진 설정
+        if (DeviceUtils.isOrientationPortrait(this)) {
+            // 세로
+            cl_bottom.setMargin(bottom = DeviceUtils.getNavigationBarHeight(this))
+        } else {
+            // 가로
+            cl_bottom.setMargin(right = DeviceUtils.getNavigationBarHeight(this))
+        }
     }
 
     /**

@@ -53,3 +53,23 @@ fun View.setMarginBottom(
         this.layoutParams = layoutParams
     }
 }
+
+
+/**
+ * 마진
+ */
+fun View.setMargin(
+    left: Int = 0,
+    top: Int = 0,
+    right: Int = 0,
+    bottom: Int = 0
+) {
+    val layoutParams = layoutParams as ViewGroup.MarginLayoutParams
+    layoutParams.setMargins(
+        left,
+        top,
+        right,
+        bottom
+    )
+    this.layoutParams = layoutParams
+}

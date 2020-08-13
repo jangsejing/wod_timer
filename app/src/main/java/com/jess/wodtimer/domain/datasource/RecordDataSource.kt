@@ -53,9 +53,9 @@ class RecordDataSourceImpl @Inject constructor(
     override fun reset() {
         dispatcher.createJob()
         _time.value = 0 // 시간 초기화
+        _isPlay.value = false // 플레이 구분 값 초기화
         _countDown.value = 0 // 카운트 다운 초기화
         _isCountDown.value = false // 카운트다운 구분 값 초기화
-        _isPlay.value = false // 플레이 구분 값 초기화
     }
 
     override fun onStart() {

@@ -1,6 +1,7 @@
 package com.jess.wodtimer.common.util
 
 import android.content.Context
+import android.content.res.Configuration
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
@@ -50,5 +51,27 @@ object DeviceUtils {
             view,
             InputMethodManager.SHOW_IMPLICIT
         )
+    }
+
+    /**
+     * 화면 세로 여부
+     */
+    fun isOrientationPortrait(context: Context?): Boolean {
+        return context?.let {
+            return it.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        } ?: run {
+            false
+        }
+    }
+
+    /**
+     * 화면 가로 여부
+     */
+    fun isOrientationLandscape(context: Context?): Boolean {
+        return context?.let {
+            return it.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        } ?: run {
+            false
+        }
     }
 }
