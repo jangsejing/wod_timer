@@ -1,6 +1,8 @@
-package com.jess.wodtimer.presentation.record
+package com.jess.wodtimer.presentation.record.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.jess.wodtimer.common.base.BaseDataSource
 import com.jess.wodtimer.common.base.BaseViewModel
 import com.jess.wodtimer.domain.datasource.RecordDataSource
@@ -15,6 +17,9 @@ class RecordViewModel @ViewModelInject constructor(
     val isPlay = dataSource.isPlay
     val isCountDown = dataSource.isCountDown
 
+    private val _title = MutableLiveData<String?>()
+    val title: LiveData<String?> get() = _title
+
     init {
         dataSource.reset()
     }
@@ -27,11 +32,24 @@ class RecordViewModel @ViewModelInject constructor(
         }
     val countDown = dataSource.countDown
 
+    /**
+     * 시작
+     */
     fun onRecord() {
         dataSource.onCountDown()
     }
 
+    /**
+     * 중지
+     */
     fun onStop() {
         dataSource.onStop()
+    }
+
+    /**
+     * 제목
+     */
+    fun setTitle(title: String?) {
+        _title.value = title
     }
 }

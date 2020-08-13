@@ -8,9 +8,11 @@
 
         <import type="android.view.View" />
 
+        <import type="android.text.TextUtils" />
+
         <variable
             name="vm"
-            type="com.jess.wodtimer.presentation.record.RecordViewModel" />
+            type="com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel" />
 
     </data>
 
@@ -54,8 +56,9 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_time"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:gravity="end"
                     android:textColor="@color/brand_white"
                     android:textSize="24sp"
@@ -73,7 +76,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="3dp"
                     android:background="#3dffffff"
-                    android:visibility="gone"
+                    android:visibility="@{!TextUtils.isEmpty(vm.title) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_time"
@@ -83,10 +86,12 @@
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:gravity="end"
+                    android:text="@{vm.title}"
                     android:textColor="@color/brand_white"
                     android:textSize="14sp"
-                    android:visibility="gone"
+                    android:visibility="@{!TextUtils.isEmpty(vm.title) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/v_timer_divider"
                     tools:text="Jess\nSpyder Championship\nPull Up, Burpee, Toe to Bar"

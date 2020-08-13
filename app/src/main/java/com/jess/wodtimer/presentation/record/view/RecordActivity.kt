@@ -1,4 +1,4 @@
-package com.jess.wodtimer.presentation.record
+package com.jess.wodtimer.presentation.record.view
 
 import android.Manifest
 import android.content.Intent
@@ -13,6 +13,7 @@ import com.jess.wodtimer.common.manager.CameraManager
 import com.jess.wodtimer.common.manager.PermissionManager
 import com.jess.wodtimer.common.util.DeviceUtils
 import com.jess.wodtimer.databinding.RecordActivityBinding
+import com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
 import java.util.concurrent.ExecutorService
@@ -108,11 +109,12 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
             R.id.iv_setting -> {
                 // 설정
-                SettingBottomDialog(this).run {
-                    setOnDismissListener {
-//                        DeviceUtils.setImmersiveMode(this@RecordActivity)
+                SettingBottomDialog(
+                    this
+                ).run {
+                    show(vm.title.value) { title ->
+                        vm.setTitle(title)
                     }
-                    show()
                 }
             }
 
