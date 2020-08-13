@@ -105,17 +105,19 @@ dependencies {
 
 // camera2
 dependencies {
-    // CameraX core library using the camera2 implementation
-    def camerax = "1.0.0-beta06"
-    // The following line is optional, as the core library is included indirectly by camera-camera2
-    implementation "androidx.camera:camera-core:$camerax"
-    implementation "androidx.camera:camera-camera2:$camerax"
-    // If you want to additionally use the CameraX Lifecycle library
-    implementation "androidx.camera:camera-lifecycle:$camerax"
-    // If you want to additionally use the CameraX View class
-    implementation "androidx.camera:camera-view:1.0.0-alpha14"
-    // If you want to additionally use the CameraX Extensions library
-    implementation "androidx.camera:camera-extensions:1.0.0-alpha14"
+//    // CameraX core library using the camera2 implementation
+//    def camerax = "1.0.0-beta06"
+//    // The following line is optional, as the core library is included indirectly by camera-camera2
+//    implementation "androidx.camera:camera-core:$camerax"
+//    implementation "androidx.camera:camera-camera2:$camerax"
+//    // If you want to additionally use the CameraX Lifecycle library
+//    implementation "androidx.camera:camera-lifecycle:$camerax"
+//    // If you want to additionally use the CameraX View class
+//    implementation "androidx.camera:camera-view:1.0.0-alpha14"
+//    // If you want to additionally use the CameraX Extensions library
+//    implementation "androidx.camera:camera-extensions:1.0.0-alpha14"
+    // CameraView
+    implementation 'com.otaliastudios:cameraview:2.2.0'
 }
 
 // google
