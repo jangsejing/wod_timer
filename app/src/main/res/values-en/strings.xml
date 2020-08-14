@@ -11,4 +11,6 @@
     <string name="record_setting_submit">Submit</string>
     <string name="record_setting_countdown">Countdown</string>
     <string name="record_setting_title">Title</string>
+
+    <string name="video_list_title">Videos</string>
 </resources>

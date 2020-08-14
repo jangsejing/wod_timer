@@ -3,6 +3,7 @@ package com.jess.wodtimer.domain.datasource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jess.wodtimer.common.base.BaseDataSource
+import com.jess.wodtimer.common.constant.RecordConst
 import com.jess.wodtimer.di.provider.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -35,8 +36,8 @@ class RecordDataSourceImpl @Inject constructor(
     override val dispatcher: DispatcherProvider
 ) : RecordDataSource {
 
-    override var countDownTime: Int = 1
-    override var maxRepeatTime: Int = 3600 // 1시간
+    override var countDownTime: Int = 10 // 카운트 다운 시간
+    override var maxRepeatTime: Int = RecordConst.MAX_RECORD_TIME // 최대 1시간
 
     private val _countDown = MutableLiveData<Int>()
     override val countDown: LiveData<Int> get() = _countDown

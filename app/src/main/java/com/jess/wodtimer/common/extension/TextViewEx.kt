@@ -91,7 +91,6 @@ fun TextView.replaceText(
  *
  * @param timeMillis
  */
-@BindingAdapter("timeFormat")
 fun TextView.timeFormat(timeMillis: Long) {
     val minute = (timeMillis / 1000) / 60
     val seconds = (timeMillis / 1000) % 60

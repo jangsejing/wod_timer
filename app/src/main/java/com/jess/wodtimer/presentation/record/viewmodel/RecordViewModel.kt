@@ -1,6 +1,5 @@
 package com.jess.wodtimer.presentation.record.viewmodel
 
-import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,8 +16,6 @@ class RecordViewModel @ViewModelInject constructor(
     val time = dataSource.time
     val isPlay = dataSource.isPlay
     val isCountDown = dataSource.isCountDown
-
-    var recentMedialUri: Uri? = null
 
     private val _title = MutableLiveData<String?>()
     val title: LiveData<String?> get() = _title

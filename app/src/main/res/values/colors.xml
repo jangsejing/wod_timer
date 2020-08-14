@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/brand_black</color>
-    <color name="colorPrimaryDark">@color/brand_black</color>
+    <color name="colorPrimary">@color/brand_white</color>
+    <color name="colorPrimaryDark">@color/brand_white</color>
     <color name="colorAccent">@color/brand_blue</color>
 
     <color name="brand_black">#000000</color>

@@ -1,7 +1,6 @@
 package com.jess.wodtimer.presentation.record.view
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
@@ -10,25 +9,23 @@ import android.content.res.Configuration
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
-import com.jess.wodtimer.BR
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
+import com.jess.wodtimer.common.constant.RecordConst
 import com.jess.wodtimer.common.extension.setMargin
-import com.jess.wodtimer.common.manager.MediaUtils
+import com.jess.wodtimer.common.manager.MediaManager
 import com.jess.wodtimer.common.manager.PermissionManager
 import com.jess.wodtimer.common.util.DeviceUtils
 import com.jess.wodtimer.databinding.RecordActivityBinding
-import com.jess.wodtimer.databinding.RecordCameraBinding
+import com.jess.wodtimer.presentation.media.VideoListActivity
 import com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.VideoResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
-import kotlinx.android.synthetic.main.record_camera.view.*
 import timber.log.Timber
 
 
@@ -55,7 +52,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         // camera
         camera.run {
             setLifecycleOwner(this@RecordActivity)
-            videoMaxDuration = 60 * 10 * 1000 // max 60 min
+            videoMaxDuration = RecordConst.MAX_RECORD_TIME // max 60 min
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
                     Timber.d("onPictureTaken")
@@ -71,18 +68,12 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                     ) { filePath: String, uri: Uri ->
                         Timber.d("filePath : $filePath")
                         Timber.d("uri : $uri")
-//                        startActivity(
-//                            Intent(
-//                                Intent.ACTION_VIEW,
-//                                uri
-//                            )
-//                        )
                     }
                 }
             })
         }
 
-        arrayOf(cl_record, cl_stop, iv_setting).forEach {
+        arrayOf(cl_record, cl_stop, iv_videos, iv_setting).forEach {
             it.setOnClickListener(this)
         }
     }
@@ -97,7 +88,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         vm.isPlay.observe(this, Observer {
             Timber.d("$it")
             if (it && !camera.isTakingVideo) {
-                camera.takeVideoSnapshot(MediaUtils.getFile(this, MediaUtils.MP4))
+                camera.takeVideoSnapshot(MediaManager.getFile(this, MediaManager.MP4))
                 DeviceUtils.setOrientation(
                     this,
                     if (DeviceUtils.isOrientationPortrait(this)) {
@@ -199,6 +190,10 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                         vm.setTitle(title)
                     }
                 }
+            }
+
+            R.id.iv_videos -> {
+                startActivity(Intent(this, VideoListActivity::class.java))
             }
         }
     }

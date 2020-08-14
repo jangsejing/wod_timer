@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.jess.wodtimer.BR
 import com.jess.wodtimer.common.extension.createViewModel
+import com.jess.wodtimer.common.view.dialog.ProgressDialog
 import kotlin.reflect.KClass
 
 /**
@@ -26,6 +27,10 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : AppCompa
     // AAC ViewModel
     protected val vm by lazy {
         createViewModel(viewModelClass)
+    }
+
+    protected val progressDialog by lazy {
+        ProgressDialog(this)
     }
 
     // 레이아웃 초기화

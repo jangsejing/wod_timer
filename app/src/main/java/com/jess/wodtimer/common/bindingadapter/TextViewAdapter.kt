@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import com.jess.wodtimer.R
+import com.jess.wodtimer.common.extension.timeFormat
 import java.util.*
 
 /**
@@ -33,12 +34,7 @@ object TextViewAdapter {
      */
     @JvmStatic
     @BindingAdapter("timeFormat")
-    fun TextView.timeFormat(timeMillis: Long) {
-        val minute = (timeMillis / 1000) / 60
-        val seconds = (timeMillis / 1000) % 60
-        this.text = String.format(
-            Locale.getDefault(),
-            context.getString(R.string.record_format, minute, seconds)
-        )
+    fun timeFormat(view: TextView, timeMillis: Long) {
+        view.timeFormat(timeMillis)
     }
 }

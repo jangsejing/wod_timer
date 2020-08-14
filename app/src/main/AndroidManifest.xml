@@ -39,6 +39,12 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".presentation.media.VideoListActivity"
+            android:launchMode="singleTop" />
+
+
     </application>
 
 </manifest>
