@@ -35,7 +35,7 @@ class RecordDataSourceImpl @Inject constructor(
     override val dispatcher: DispatcherProvider
 ) : RecordDataSource {
 
-    override var countDownTime: Int = 3
+    override var countDownTime: Int = 1
     override var maxRepeatTime: Int = 3600 // 1시간
 
     private val _countDown = MutableLiveData<Int>()

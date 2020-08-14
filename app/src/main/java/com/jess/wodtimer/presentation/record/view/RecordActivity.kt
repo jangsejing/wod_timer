@@ -1,16 +1,19 @@
 package com.jess.wodtimer.presentation.record.view
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.hardware.SensorManager
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
-import android.view.OrientationEventListener
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.jess.wodtimer.BR
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
 import com.jess.wodtimer.common.extension.setMargin
@@ -18,12 +21,14 @@ import com.jess.wodtimer.common.manager.MediaUtils
 import com.jess.wodtimer.common.manager.PermissionManager
 import com.jess.wodtimer.common.util.DeviceUtils
 import com.jess.wodtimer.databinding.RecordActivityBinding
+import com.jess.wodtimer.databinding.RecordCameraBinding
 import com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.VideoResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
+import kotlinx.android.synthetic.main.record_camera.view.*
 import timber.log.Timber
 
 
@@ -40,10 +45,12 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        setOrientationMargin()
+        restartActivity()
     }
 
     override fun initLayout() {
+
+        setOrientationMargin()
 
         // camera
         camera.run {
@@ -64,12 +71,12 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                     ) { filePath: String, uri: Uri ->
                         Timber.d("filePath : $filePath")
                         Timber.d("uri : $uri")
-                        startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                uri
-                            )
-                        )
+//                        startActivity(
+//                            Intent(
+//                                Intent.ACTION_VIEW,
+//                                uri
+//                            )
+//                        )
                     }
                 }
             })
@@ -91,46 +98,38 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             Timber.d("$it")
             if (it && !camera.isTakingVideo) {
                 camera.takeVideoSnapshot(MediaUtils.getFile(this, MediaUtils.MP4))
+                DeviceUtils.setOrientation(
+                    this,
+                    if (DeviceUtils.isOrientationPortrait(this)) {
+                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                    } else {
+                        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                    }
+                )
             } else {
                 camera.stopVideo()
+                DeviceUtils.setOrientation(this, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
             }
         })
     }
 
     private fun initListener() {
-        val orientEventListener = object : OrientationEventListener(
-            this,
-            SensorManager.SENSOR_DELAY_NORMAL
-        ) {
-            override fun onOrientationChanged(arg0: Int) {
-//
-//                //arg0: 기울기 값
-//                mTextOrient.setText(
-//                    "Orientation: "
-//                            + arg0.toString()
-//                )
-//
-//                // 0˚ (portrait)
-//                if (arg0 >= 315 || arg0 < 45) {
-//                    mTextArrow.setRotation(0)
-//                } else if (arg0 >= 45 && arg0 < 135) {
-//                    mTextArrow.setRotation(270)
-//                } else if (arg0 >= 135 && arg0 < 225) {
-//                    mTextArrow.setRotation(180)
-//                } else if (arg0 >= 225 && arg0 < 315) {
-//                    mTextArrow.setRotation(90)
-//                }
-            }
-        }
 
-        if (orientEventListener.canDetectOrientation()) {
-            orientEventListener.enable()
+    }
+
+    /**
+     * 액티비티 제시작
+     */
+    private fun restartActivity() {
+        val intent = Intent(this, RecordActivity::class.java).apply {
+            flags = FLAG_ACTIVITY_NO_ANIMATION or FLAG_ACTIVITY_CLEAR_TASK
         }
+        startActivity(intent)
+        finish()
     }
 
     override fun onResume() {
         super.onResume()
-        setOrientationMargin()
     }
 
     override fun onPause() {
@@ -151,9 +150,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             cl_bottom.setMargin(bottom = DeviceUtils.getNavigationBarHeight(this))
         } else {
             // 가로
-            cl_bottom.setMargin(
-                right = DeviceUtils.getNavigationBarHeight(this)
-            )
+            cl_bottom.setMargin(bottom = 0)
         }
     }
 
