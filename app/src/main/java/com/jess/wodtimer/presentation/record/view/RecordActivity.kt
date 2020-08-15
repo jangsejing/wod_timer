@@ -7,7 +7,9 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.media.AudioAttributes
 import android.media.MediaScannerConnection
+import android.media.SoundPool
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -19,6 +21,7 @@ import com.jess.wodtimer.common.constant.RecordConst
 import com.jess.wodtimer.common.extension.setMargin
 import com.jess.wodtimer.common.manager.MediaManager
 import com.jess.wodtimer.common.manager.PermissionManager
+import com.jess.wodtimer.common.manager.SoundPoolManager
 import com.jess.wodtimer.common.util.DeviceUtils
 import com.jess.wodtimer.databinding.RecordActivityBinding
 import com.jess.wodtimer.presentation.media.VideoListActivity
@@ -42,6 +45,21 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
     override val layoutRes get() = R.layout.record_activity
     override val viewModelClass get() = RecordViewModel::class
+
+    private val soundPool by lazy {
+        val attributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        SoundPool.Builder()
+            .setAudioAttributes(attributes)
+            .setMaxStreams(8)
+            .build()
+    }
+
+    private val soundManager by lazy {
+        SoundPoolManager(this)
+    }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -92,7 +110,13 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         vm.isPlay.observe(this, Observer {
             Timber.d("$it")
             if (it && !camera.isTakingVideo) {
+                // 비프음
+                soundManager.play(RecordConst.BEEP_PLAY)
+
+                // 녹화시작
                 camera.takeVideoSnapshot(MediaManager.getFile(this, MediaManager.MP4))
+
+                // 화면 고정
                 DeviceUtils.setOrientation(
                     this,
                     if (DeviceUtils.isOrientationPortrait(this)) {
@@ -102,13 +126,20 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                     }
                 )
             } else {
+                // 녹화종료
                 camera.stopVideo()
+
+                // 카메라 회전
                 DeviceUtils.setOrientation(this, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
             }
         })
 
         vm.isSound.observe(this, Observer {
             camera.playSounds = it
+        })
+
+        vm.isCountdownBeep.observe(this, Observer {
+            soundManager.play(RecordConst.BEEP_COUNTDOWN)
         })
     }
 
@@ -125,6 +156,14 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         }
         startActivity(intent)
         finish()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        soundManager.run {
+            add(RecordConst.BEEP_COUNTDOWN, R.raw.beep_coundown)
+            add(RecordConst.BEEP_PLAY, R.raw.beep_play)
+        }
     }
 
     override fun onResume() {

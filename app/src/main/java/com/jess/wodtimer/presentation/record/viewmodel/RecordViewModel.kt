@@ -16,12 +16,14 @@ class RecordViewModel @ViewModelInject constructor(
 
     override var baseDataSource: BaseDataSource? = dataSource
 
-    val title = dataSource.settingDataSource.title
-    val isSound = dataSource.settingDataSource.isSound
-
     val time = dataSource.time
     val isPlay = dataSource.isPlay
     val isCountDown = dataSource.isCountDown
+    val isCountdownBeep = dataSource.isCountDownBeep
+
+    val title = dataSource.settingDataSource.title
+    val isSound = dataSource.settingDataSource.isSound
+
 
     init {
         dataSource.reset()

@@ -11,4 +11,7 @@ object RecordConst {
     const val PREF_RECORD_COUNTDOWN = "PREF_RECORD_COUNTDOWN" // 카운트 다운
     const val PREF_RECORD_IS_SOUND = "PREF_RECORD_IS_SOUND" // 소리 녹음
 
+    const val BEEP_COUNTDOWN = "BEEP_COUNTDOWN" // 비프음
+    const val BEEP_PLAY = "BEEP_PLAY" // 비프음
+
 }

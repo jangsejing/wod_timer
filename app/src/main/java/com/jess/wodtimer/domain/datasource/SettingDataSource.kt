@@ -16,14 +16,14 @@ import javax.inject.Inject
 interface SettingDataSource : BaseDataSource {
 
     val title: LiveData<String?>
-    val countdown: LiveData<Int>
+    val countDown: LiveData<Int>
     val isSound: LiveData<Boolean>
 
     fun getData()
 
     fun submit(
         title: String? = null,
-        countdown: Int = RecordConst.DEFAULT_COUNTDOWN,
+        countDown: Int = RecordConst.DEFAULT_COUNTDOWN,
         isSound: Boolean = true
     )
 }
@@ -36,8 +36,8 @@ class SettingDataSourceImpl @Inject constructor(
     private val _title = MutableLiveData<String?>()
     override val title: LiveData<String?> get() = _title
 
-    private val _countdown = MutableLiveData<Int>()
-    override val countdown: LiveData<Int> get() = _countdown
+    private val _countDown = MutableLiveData<Int>()
+    override val countDown: LiveData<Int> get() = _countDown
 
     private val _isSound = MutableLiveData<Boolean>()
     override val isSound: LiveData<Boolean> get() = _isSound
@@ -45,7 +45,7 @@ class SettingDataSourceImpl @Inject constructor(
     override fun getData() {
         preferencesManager.run {
             _title.value = getString(RecordConst.PREF_RECORD_TITLE)
-            _countdown.value =
+            _countDown.value =
                 getInt(
                     RecordConst.PREF_RECORD_COUNTDOWN,
                     RecordConst.DEFAULT_COUNTDOWN
@@ -54,10 +54,10 @@ class SettingDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun submit(title: String?, countdown: Int, isSound: Boolean) {
+    override fun submit(title: String?, countDown: Int, isSound: Boolean) {
         preferencesManager.run {
             put(RecordConst.PREF_RECORD_TITLE, title)
-            put(RecordConst.PREF_RECORD_COUNTDOWN, countdown)
+            put(RecordConst.PREF_RECORD_COUNTDOWN, countDown)
             put(RecordConst.PREF_RECORD_IS_SOUND, isSound)
         }
     }

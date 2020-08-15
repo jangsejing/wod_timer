@@ -25,6 +25,7 @@ interface RecordDataSource : BaseDataSource {
     val time: LiveData<Long>
     val isPlay: LiveData<Boolean>
     val isCountDown: LiveData<Boolean>
+    val isCountDownBeep: LiveData<Boolean>
     var countDownTime: Int // 카운트 타임 시간
     var maxRepeatTime: Int // 맥스 시간
 
@@ -57,10 +58,13 @@ class RecordDataSourceImpl @Inject constructor(
     private val _isCountDown = MutableLiveData<Boolean>()
     override val isCountDown: LiveData<Boolean> get() = _isCountDown
 
+    private val _isCountDownBeep = MutableLiveData<Boolean>()
+    override val isCountDownBeep: LiveData<Boolean> get() = _isCountDownBeep
+
     override fun setData() {
         settingDataSource.run {
             getData()
-            countdown.value?.let {
+            countDown.value?.let {
                 countDownTime = it
             }
         }
@@ -86,7 +90,12 @@ class RecordDataSourceImpl @Inject constructor(
         _isCountDown.value = true
         CoroutineScope(dispatcher.default).launch {
             repeat(countDownTime + 1) {
-                _countDown.postValue(countDownTime - it)
+
+                val countDown = countDownTime - it
+                _countDown.postValue(countDown)
+                if (countDown in 1..3) {
+                    _isCountDownBeep.postValue(true)
+                }
                 Timber.d("countDown $it")
 
                 if (countDownTime == it) {

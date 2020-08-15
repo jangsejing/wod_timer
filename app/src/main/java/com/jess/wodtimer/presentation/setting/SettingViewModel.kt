@@ -10,17 +10,17 @@ class SettingViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     val title = dataSource.title
-    val countdown = dataSource.countdown
+    val countDown = dataSource.countDown
     val isSound = dataSource.isSound
 
     fun getData() {
         dataSource.getData()
     }
 
-    fun submit(title: String?, countdown: String?, isSound: Boolean) {
+    fun submit(title: String?, countDown: String?, isSound: Boolean) {
         dataSource.submit(
             title,
-            countdown?.toInt() ?: RecordConst.DEFAULT_COUNTDOWN,
+            countDown?.toInt() ?: RecordConst.DEFAULT_COUNTDOWN,
             isSound
         )
     }

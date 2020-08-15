@@ -9,14 +9,14 @@
 
     <string name="record_format">%02d:%02d</string>
     <string name="record_setting_submit">Submit</string>
-    <string name="record_setting_countdown">Countdown</string>
+    <string name="record_setting_countdown">CountDown</string>
     <string name="record_setting_title">Title</string>
 
     <string name="video_list_title">Videos</string>
 
     <string name="setting_title">Settings</string>
     <string name="setting_element_title">Title</string>
-    <string name="setting_element_countdown">Countdown</string>
+    <string name="setting_element_countdown">CountDown</string>
     <string name="setting_element_sound">Sound</string>
 
 </resources>
