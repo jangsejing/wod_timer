@@ -93,15 +93,8 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     }
 
     private fun initObserve() {
-        vm.isPlay.observe(this, Observer {
-            Timber.d("$it")
-            if (it && !camera.isTakingVideo) {
-                // 비프음
-                soundManager.play(RecordConst.BEEP_PLAY)
-
-                // 녹화시작
-                camera.takeVideoSnapshot(MediaManager.getFile(this, MediaManager.MP4))
-
+        vm.isCountDown.observe(this, Observer {
+            if (it) {
                 // 화면 고정
                 DeviceUtils.setOrientation(
                     this,
@@ -111,10 +104,19 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                         ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                     }
                 )
+            }
+        })
+
+        vm.isPlay.observe(this, Observer {
+            Timber.d("$it")
+            if (it && !camera.isTakingVideo) {
+                // 비프음
+                soundManager.play(RecordConst.BEEP_PLAY)
+                // 녹화시작
+                camera.takeVideoSnapshot(MediaManager.getFile(this, MediaManager.MP4))
             } else {
                 // 녹화종료
                 camera.stopVideo()
-
                 // 카메라 회전
                 DeviceUtils.setOrientation(this, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
             }
