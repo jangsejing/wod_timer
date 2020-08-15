@@ -7,9 +7,7 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.media.AudioAttributes
 import android.media.MediaScannerConnection
-import android.media.SoundPool
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -44,17 +42,6 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
     override val layoutRes get() = R.layout.record_activity
     override val viewModelClass get() = RecordViewModel::class
-
-    private val soundPool by lazy {
-        val attributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
-        SoundPool.Builder()
-            .setAudioAttributes(attributes)
-            .setMaxStreams(8)
-            .build()
-    }
 
     private val soundManager by lazy {
         SoundPoolManager(this)
@@ -93,7 +80,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             })
         }
 
-        arrayOf(cl_record, cl_stop, iv_videos, iv_setting).forEach {
+        arrayOf(cl_record, cl_stop, iv_videos, iv_setting, v_watermark).forEach {
             it.setOnClickListener(this)
         }
     }
@@ -226,6 +213,15 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
 
             R.id.iv_videos -> {
                 startActivity(Intent(this, VideoListActivity::class.java))
+            }
+
+            R.id.v_watermark -> {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.instagram.com/jjang_se_jin/?hl=ko")
+                    )
+                )
             }
         }
     }
