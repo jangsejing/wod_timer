@@ -10,13 +10,13 @@ Repository - DataSource
 ![arcithecture](https://github.com/jess-jang/WODTimer/blob/master/arcithecture_plan.png)
 
 ## JetPack
-AndroidX, AAC ViewModel, DataBinding, Lifecycle, LiveData, ListAdapter
+AndroidX, AAC ViewModel, DataBinding, Lifecycle, LiveData
 
 ## Network
 Retrofit2
 
 ## DI
-Dagger2
+Hilt
 
 ## Thread
 Coroutine
