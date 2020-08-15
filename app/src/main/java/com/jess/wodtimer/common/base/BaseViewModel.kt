@@ -1,5 +1,6 @@
 package com.jess.wodtimer.common.base
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 /**
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModel
 abstract class BaseViewModel : ViewModel() {
 
     open var baseDataSource: BaseDataSource? = null
+    open var isProgress: LiveData<Boolean>? = null
 
     override fun onCleared() {
         baseDataSource?.onCleared()

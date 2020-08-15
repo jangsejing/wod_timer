@@ -5,7 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jess.wodtimer.common.base.BaseDataSource
 import com.jess.wodtimer.common.base.BaseViewModel
+import com.jess.wodtimer.common.constant.RecordConst
+import com.jess.wodtimer.common.manager.PreferencesManager
 import com.jess.wodtimer.domain.datasource.RecordDataSource
+import com.jess.wodtimer.domain.datasource.SettingDataSource
 
 class RecordViewModel @ViewModelInject constructor(
     private val dataSource: RecordDataSource
@@ -13,23 +16,17 @@ class RecordViewModel @ViewModelInject constructor(
 
     override var baseDataSource: BaseDataSource? = dataSource
 
+    val title = dataSource.settingDataSource.title
+    val isSound = dataSource.settingDataSource.isSound
+
     val time = dataSource.time
     val isPlay = dataSource.isPlay
     val isCountDown = dataSource.isCountDown
-
-    private val _title = MutableLiveData<String?>()
-    val title: LiveData<String?> get() = _title
 
     init {
         dataSource.reset()
     }
 
-    // 카운트 다운 데이터
-    var countDownTime: Int = 0
-        set(value) {
-            field = value
-            dataSource.countDownTime = field
-        }
     val countDown = dataSource.countDown
 
     /**
@@ -46,10 +43,7 @@ class RecordViewModel @ViewModelInject constructor(
         dataSource.onStop()
     }
 
-    /**
-     * 제목
-     */
-    fun setTitle(title: String?) {
-        _title.value = title
+    fun setData() {
+        dataSource.setData()
     }
 }

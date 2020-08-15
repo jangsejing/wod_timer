@@ -3,7 +3,9 @@ package com.jess.wodtimer.domain.datasource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jess.wodtimer.common.base.BaseDataSource
+import com.jess.wodtimer.common.base.BaseDataSourceImpl
 import com.jess.wodtimer.common.constant.RecordConst
+import com.jess.wodtimer.common.manager.PreferencesManager
 import com.jess.wodtimer.di.provider.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -17,6 +19,8 @@ import javax.inject.Inject
  */
 interface RecordDataSource : BaseDataSource {
 
+    val settingDataSource: SettingDataSource
+
     val countDown: LiveData<Int>
     val time: LiveData<Long>
     val isPlay: LiveData<Boolean>
@@ -24,6 +28,7 @@ interface RecordDataSource : BaseDataSource {
     var countDownTime: Int // 카운트 타임 시간
     var maxRepeatTime: Int // 맥스 시간
 
+    fun setData()
     fun reset()
     fun onStart()
     fun onCountDown()
@@ -33,10 +38,11 @@ interface RecordDataSource : BaseDataSource {
 }
 
 class RecordDataSourceImpl @Inject constructor(
-    override val dispatcher: DispatcherProvider
-) : RecordDataSource {
+    override val dispatcher: DispatcherProvider,
+    override val settingDataSource: SettingDataSource
+) : BaseDataSourceImpl(), RecordDataSource {
 
-    override var countDownTime: Int = 10 // 카운트 다운 시간
+    override var countDownTime: Int = RecordConst.DEFAULT_COUNTDOWN // 카운트 다운 시간
     override var maxRepeatTime: Int = RecordConst.MAX_RECORD_TIME // 최대 1시간
 
     private val _countDown = MutableLiveData<Int>()
@@ -50,6 +56,15 @@ class RecordDataSourceImpl @Inject constructor(
 
     private val _isCountDown = MutableLiveData<Boolean>()
     override val isCountDown: LiveData<Boolean> get() = _isCountDown
+
+    override fun setData() {
+        settingDataSource.run {
+            getData()
+            countdown.value?.let {
+                countDownTime = it
+            }
+        }
+    }
 
     override fun reset() {
         dispatcher.createJob()

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/brand_white</color>
+    <color name="colorPrimary">@color/brand_blue</color>
     <color name="colorPrimaryDark">@color/brand_white</color>
     <color name="colorAccent">@color/brand_blue</color>
 
@@ -10,7 +10,7 @@
     <color name="brand_red">#f45858</color>
     <color name="brand_mint">#00cdc6</color>
     <color name="brand_white">#ffffff</color>
-    
+
     <color name="brand_black_alpha_5">#80000000</color>
 
     <color name="text_grey">#858585</color>

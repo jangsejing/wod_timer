@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jess.wodtimer.common.base.BaseDataSource
+import com.jess.wodtimer.common.base.BaseDataSourceImpl
 import com.jess.wodtimer.common.manager.MediaManager
+import com.jess.wodtimer.common.manager.PreferencesManager
 import com.jess.wodtimer.data.MediaData
 import com.jess.wodtimer.di.provider.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
@@ -25,8 +27,9 @@ interface MediaDataSource : BaseDataSource {
 }
 
 class MediaDataSourceImpl @Inject constructor(
-    override val dispatcher: DispatcherProvider
-) : MediaDataSource {
+    override val dispatcher: DispatcherProvider,
+    val preferences: PreferencesManager
+) : BaseDataSourceImpl(), MediaDataSource {
 
     private val _mediaList = MutableLiveData<List<MediaData>>()
     override val mediaList: LiveData<List<MediaData>> get() = _mediaList
@@ -35,8 +38,10 @@ class MediaDataSourceImpl @Inject constructor(
      * 동영상 리스트
      */
     override fun getVideoList(context: Context?) {
+        _isProgress.value = true
         CoroutineScope(dispatcher.main).launch {
             _mediaList.value = MediaManager.getVideoList(context)
+            _isProgress.value = false
         }
     }
 }

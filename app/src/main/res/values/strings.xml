@@ -1,17 +1,22 @@
 <resources>
 
     <string name="app_name">WODTimer</string>
-    <string name="seconds">%d초</string>
-    <string name="setting">설정</string>
+    <string name="seconds">s</string>
+    <string name="setting">Settings</string>
 
-    <string name="permission_denied_title">권한 거부</string>
-    <string name="permission_denied_message">권한을 거부하면이 서비스를 사용할 수 없습니다. [설정] > [권한]에서 권한을 설정하세요.</string>
+    <string name="permission_denied_title">Permission denied</string>
+    <string name="permission_denied_message">If you reject permission, you can not use this service Please turn on permissions at [Setting] > [Permission]</string>
 
     <string name="record_format">%02d:%02d</string>
-    <string name="record_setting_submit">적용</string>
-    <string name="record_setting_countdown">카운트다운</string>
-    <string name="record_setting_title">제목</string>
+    <string name="record_setting_submit">Submit</string>
+    <string name="record_setting_countdown">Countdown</string>
+    <string name="record_setting_title">Title</string>
 
-    <string name="video_list_title">비디오</string>
+    <string name="video_list_title">Videos</string>
+
+    <string name="setting_title">Settings</string>
+    <string name="setting_element_title">Title</string>
+    <string name="setting_element_countdown">Countdown</string>
+    <string name="setting_element_sound">Sound</string>
 
 </resources>

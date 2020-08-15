@@ -52,13 +52,12 @@ class VideoListActivity : BaseActivity<VideoListActivityBinding, VideoListViewMo
 
     override fun onCreated(savedInstanceState: Bundle?) {
         initObserve()
-        progressDialog.show()
         vm.getVideoList(this)
     }
 
     private fun initObserve() {
         vm.mediaList.observe(this, Observer {
-            progressDialog.dismiss()
+
         })
     }
 

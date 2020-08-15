@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import com.jess.wodtimer.BR
 import com.jess.wodtimer.common.extension.createViewModel
 import com.jess.wodtimer.common.view.dialog.ProgressDialog
@@ -55,5 +56,9 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : AppCompa
             lifecycleOwner = this@BaseActivity
             setVariable(BR.vm, vm)
         }
+
+        vm.isProgress?.observe(this, Observer {
+            if (it) progressDialog.show() else progressDialog.dismiss()
+        })
     }
 }

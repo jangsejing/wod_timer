@@ -1,6 +1,7 @@
 package com.jess.wodtimer.presentation.record.view
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
@@ -10,6 +11,7 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
@@ -21,6 +23,7 @@ import com.jess.wodtimer.common.util.DeviceUtils
 import com.jess.wodtimer.databinding.RecordActivityBinding
 import com.jess.wodtimer.presentation.media.VideoListActivity
 import com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel
+import com.jess.wodtimer.presentation.setting.SettingActivity
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.VideoResult
@@ -52,7 +55,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         // camera
         camera.run {
             setLifecycleOwner(this@RecordActivity)
-            videoMaxDuration = RecordConst.MAX_RECORD_TIME // max 60 min
+            videoMaxDuration = RecordConst.MAX_RECORD_TIME * 1000 // max 60 min
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
                     Timber.d("onPictureTaken")
@@ -82,6 +85,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         initObserve()
         initListener()
         checkPermissions()
+        vm.setData()
     }
 
     private fun initObserve() {
@@ -101,6 +105,10 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
                 camera.stopVideo()
                 DeviceUtils.setOrientation(this, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
             }
+        })
+
+        vm.isSound.observe(this, Observer {
+            camera.playSounds = it
         })
     }
 
@@ -182,14 +190,12 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             }
 
             R.id.iv_setting -> {
-                // 설정
-                SettingBottomDialog(
-                    this
-                ).run {
-                    show(vm.title.value) { title ->
-                        vm.setTitle(title)
+                val intent = Intent(this, SettingActivity::class.java)
+                registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                    if (result.resultCode == Activity.RESULT_OK) {
+                        vm.setData()
                     }
-                }
+                }.launch(intent)
             }
 
             R.id.iv_videos -> {
