@@ -24,7 +24,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".presentation.record.view.RecordActivity"
+            android:name=".presentation.record.RecordActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/RecordTheme"
             android:windowSoftInputMode="adjustResize">

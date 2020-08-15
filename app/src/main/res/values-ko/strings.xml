@@ -17,7 +17,7 @@
     <string name="setting_title">환경설정</string>
     <string name="setting_element_title">제목</string>
     <string name="setting_element_countdown">카운트다운</string>
-    <string name="setting_element_sound">소리</string>
-
+    <string name="setting_element_countdown_valid">5~60초 사이를 입력해주세요.</string>
+    <string name="setting_element_sound">녹</string>
 
 </resources>

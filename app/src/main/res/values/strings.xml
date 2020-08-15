@@ -17,6 +17,8 @@
     <string name="setting_title">Settings</string>
     <string name="setting_element_title">Title</string>
     <string name="setting_element_countdown">CountDown</string>
-    <string name="setting_element_sound">Sound</string>
+    <string name="setting_element_countdown_valid">Please enter between 5 and 60 seconds.</string>
+    <string name="setting_element_sound">Sound Record</string>
+
 
 </resources>

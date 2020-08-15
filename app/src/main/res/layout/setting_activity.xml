@@ -70,6 +70,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_countdown"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -77,6 +78,8 @@
                             android:background="@color/brand_white"
                             android:hint="@string/setting_element_countdown"
                             app:boxStrokeColor="@color/brand_blue"
+                            app:boxStrokeErrorColor="@color/brand_red"
+                            app:errorTextColor="@color/brand_red"
                             app:hintTextColor="@color/brand_blue"
                             app:suffixText="@string/seconds">
 

@@ -12,7 +12,7 @@
 
         <variable
             name="vm"
-            type="com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel" />
+            type="com.jess.wodtimer.presentation.record.RecordViewModel" />
 
     </data>
 

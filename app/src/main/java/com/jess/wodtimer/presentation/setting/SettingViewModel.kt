@@ -18,9 +18,14 @@ class SettingViewModel @ViewModelInject constructor(
     }
 
     fun submit(title: String?, countDown: String?, isSound: Boolean) {
+        val time = if (!countDown.isNullOrEmpty()) {
+            countDown.toInt()
+        } else {
+            RecordConst.DEFAULT_COUNTDOWN
+        }
         dataSource.submit(
             title,
-            countDown?.toInt() ?: RecordConst.DEFAULT_COUNTDOWN,
+            time,
             isSound
         )
     }

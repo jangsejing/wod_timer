@@ -1,4 +1,4 @@
-package com.jess.wodtimer.presentation.record.view
+package com.jess.wodtimer.presentation.record
 
 import android.Manifest
 import android.app.Activity
@@ -25,7 +25,6 @@ import com.jess.wodtimer.common.manager.SoundPoolManager
 import com.jess.wodtimer.common.util.DeviceUtils
 import com.jess.wodtimer.databinding.RecordActivityBinding
 import com.jess.wodtimer.presentation.media.VideoListActivity
-import com.jess.wodtimer.presentation.record.viewmodel.RecordViewModel
 import com.jess.wodtimer.presentation.setting.SettingActivity
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
@@ -164,18 +163,6 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             add(RecordConst.BEEP_COUNTDOWN, R.raw.beep_coundown)
             add(RecordConst.BEEP_PLAY, R.raw.beep_play)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     /**

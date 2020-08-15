@@ -1,4 +1,4 @@
-package com.jess.wodtimer.presentation.record.viewmodel
+package com.jess.wodtimer.presentation.record
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData

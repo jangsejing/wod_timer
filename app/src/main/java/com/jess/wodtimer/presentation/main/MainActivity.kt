@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.jess.wodtimer.R
-import com.jess.wodtimer.presentation.record.view.RecordActivity
+import com.jess.wodtimer.presentation.record.RecordActivity
 import kotlinx.android.synthetic.main.main_activity.*
 
 /**
