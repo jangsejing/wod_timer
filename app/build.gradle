@@ -18,7 +18,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("certification/upload_cert")
+            storeFile file("certification/wodtimer.jks")
             storePassword 'jess.jang'
             keyAlias 'jess.jang'
             keyPassword 'jess.jang'
