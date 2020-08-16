@@ -10,7 +10,7 @@ android {
         applicationId "com.jess.wodtimer"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 2
+        versionCode 3
         versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -18,7 +18,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("certification/wodtimer.jks")
+            storeFile file("certification/upload_cert")
             storePassword 'jess.jang'
             keyAlias 'jess.jang'
             keyPassword 'jess.jang'
