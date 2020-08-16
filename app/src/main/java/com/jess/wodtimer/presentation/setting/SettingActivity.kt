@@ -38,21 +38,7 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
     }
 
     private fun initListener() {
-        ti_countdown.editText?.doOnTextChanged { text, start, before, count ->
-            if (!text.isNullOrBlank()) {
-                val time = text.toString().toInt()
-                if (isCountDownTimeNotValid(time)) {
-                    ti_countdown.error = getString(R.string.setting_element_countdown_valid)
-                    ti_countdown.isErrorEnabled = true
-                }
-            } else {
-                ti_countdown.isErrorEnabled = false
-            }
-        }
-    }
 
-    private fun isCountDownTimeNotValid(time: Int): Boolean {
-        return time < 5 || time > 60
     }
 
     override fun onClick(v: View?) {
@@ -62,11 +48,6 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
             }
 
             R.id.bt_submit -> {
-                val time = et_countdown.editableText.toString().toInt()
-                if (isCountDownTimeNotValid(time)) {
-                    return
-                }
-
                 vm.submit(
                     et_title.text.toString(),
                     et_countdown.text.toString(),
