@@ -17,7 +17,7 @@ data class MediaData(
     val thumbnail =
         ThumbnailUtils.createVideoThumbnail(
             path ?: "",
-            MediaStore.Images.Thumbnails.MINI_KIND
+            MediaStore.Images.Thumbnails.FULL_SCREEN_KIND
         )
 
 }
