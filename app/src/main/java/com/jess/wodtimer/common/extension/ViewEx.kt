@@ -39,25 +39,6 @@ fun View.setCircleRipple() = with(TypedValue()) {
 }
 
 /**
- * 하단 마진
- */
-fun View.setMarginBottom(
-    margin: Int?
-) {
-    margin?.let {
-        val layoutParams = layoutParams as ViewGroup.MarginLayoutParams
-        layoutParams.setMargins(
-            layoutParams.leftMargin,
-            layoutParams.topMargin,
-            layoutParams.rightMargin,
-            margin
-        )
-        this.layoutParams = layoutParams
-    }
-}
-
-
-/**
  * 마진
  */
 fun View.setMargin(

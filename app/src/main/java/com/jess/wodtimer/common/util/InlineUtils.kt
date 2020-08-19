@@ -9,11 +9,3 @@ inline fun tryCatch(action: () -> Unit) {
         Timber.e(e)
     }
 }
-
-inline fun <T : R, R> T.cast(
-    clazz: Class<R>,
-    block: R.() -> Unit
-): R {
-    if (clazz.isInstance(this)) (this as R).block()
-    return this
-}
