@@ -19,12 +19,19 @@ class RecordViewModel @ViewModelInject constructor(
     val time = dataSource.time
     val isPlay = dataSource.isPlay
     val isCountDown = dataSource.isCountDown
-    val isBeepShort = dataSource.isBeepShort
     val date = dataSource.date
+    val countDown = dataSource.countDown
 
+    // 비프음
+    val isBeepShort = dataSource.isBeepShort
+    val isBeepLong = dataSource.isBeepLong
+
+    // 설정
+    val ratio = dataSource.settingDataSource.ratio
+    val timerType = dataSource.settingDataSource.timerType
+    val timerTypeDisplay = dataSource.settingDataSource.timerTypeDisplay
     val title = dataSource.settingDataSource.title
     val isSound = dataSource.settingDataSource.isSound
-    val ratio = dataSource.settingDataSource.ratio
     val isDate = dataSource.settingDataSource.isDate
 
     init {
@@ -33,8 +40,6 @@ class RecordViewModel @ViewModelInject constructor(
             reset()
         }
     }
-
-    val countDown = dataSource.countDown
 
     /**
      * 시작
@@ -50,6 +55,10 @@ class RecordViewModel @ViewModelInject constructor(
         dataSource.onStop()
     }
 
+    /**
+     * 데이터 세팅
+     * 앱 진입, 환경 설정 후 진입
+     */
     fun setData() {
         dataSource.setData()
     }

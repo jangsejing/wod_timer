@@ -27,7 +27,8 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
     override val layoutRes get() = R.layout.setting_activity
     override val viewModelClass get() = SettingViewModel::class
 
-    private var ratio: RecordConst.RATIO = RecordConst.RATIO.GENERAL
+    private var ratio = RecordConst.Ratio.GENERAL
+    private var timerType = RecordConst.TimerType.FOR_TIME
 
     override fun initLayout() {
         arrayOf(iv_finish, bt_submit).forEach {
@@ -42,20 +43,34 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
     }
 
     private fun initObserve() {
-        vm.ratio.observe(this, Observer {
-            when (it) {
-                RecordConst.RATIO.INSTAGRAM -> rb_ratio_instagram.isChecked = true
-                else -> rb_ratio_general.isChecked = true
-            }
-        })
+
     }
 
     private fun initListener() {
         rg_ratio.setOnCheckedChangeListener { radioGroup, i ->
             ratio = if (i == R.id.rb_ratio_instagram) {
-                RecordConst.RATIO.INSTAGRAM
+                RecordConst.Ratio.INSTAGRAM
             } else {
-                RecordConst.RATIO.GENERAL
+                RecordConst.Ratio.GENERAL
+            }
+        }
+
+        rg_timer_type.setOnCheckedChangeListener { radioGroup, i ->
+            ti_timer_type_minute.visibility = View.VISIBLE
+            timerType = when (i) {
+                R.id.rb_ratio_time_cap -> {
+                    RecordConst.TimerType.TIME_CAP
+                }
+                R.id.rb_ratio_amrap -> {
+                    RecordConst.TimerType.AMRAP
+                }
+//                R.id.rb_ratio_emom -> {
+//                    RecordConst.TimerType.EMOM
+//                }
+                else -> {
+                    ti_timer_type_minute.visibility = View.GONE
+                    RecordConst.TimerType.FOR_TIME
+                }
             }
         }
     }
@@ -69,6 +84,8 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
             R.id.bt_submit -> {
                 vm.submit(
                     ratio,
+                    timerType,
+                    et_timer_type_minute.text.toString(),
                     et_title.text.toString(),
                     et_countdown.text.toString(),
                     swc_sound.isChecked,

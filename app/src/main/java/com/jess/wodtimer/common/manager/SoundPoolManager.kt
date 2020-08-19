@@ -12,6 +12,11 @@ import android.media.SoundPool
  */
 class SoundPoolManager(private val context: Context) {
 
+    companion object {
+        const val BEEP_SHORT = "BEEP_SHORT" // 비프음
+        const val BEEP_LONG = "BEEP_LONG" // 비프음
+    }
+
     private val soundPool by lazy {
         val attributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_NOTIFICATION)

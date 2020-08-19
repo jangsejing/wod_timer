@@ -64,17 +64,28 @@
                     android:background="@drawable/shp_rect_black_alpha_5"
                     android:orientation="vertical"
                     android:paddingStart="4dp"
-                    android:paddingTop="0dp"
+                    android:paddingTop="3dp"
                     android:paddingEnd="4dp"
-                    android:paddingBottom="2dp"
+                    android:paddingBottom="3dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_timer_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@{vm.timerTypeDisplay}"
+                        android:textColor="@color/brand_white"
+                        android:textSize="12sp"
+                        tools:text="For Time" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
                         android:textColor="@color/brand_white"
                         android:textSize="24sp"
                         bind:timeFormat="@{vm.time}"

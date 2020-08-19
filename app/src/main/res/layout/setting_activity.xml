@@ -6,6 +6,10 @@
 
     <data>
 
+        <import type="com.jess.wodtimer.common.constant.RecordConst.Ratio" />
+
+        <import type="com.jess.wodtimer.common.constant.RecordConst.TimerType" />
+
         <variable
             name="vm"
             type="com.jess.wodtimer.presentation.setting.SettingViewModel" />
@@ -44,6 +48,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+                        <!-- 비율 -->
                         <RadioGroup
                             android:id="@+id/rg_ratio"
                             android:layout_width="match_parent"
@@ -59,13 +64,87 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:layout_marginTop="5dp"
-                                android:text="@string/setting_element_general" />
+                                android:checked="@{vm.ratio == Ratio.GENERAL}"
+                                android:text="@string/setting_element_general"
+                                android:textSize="15sp" />
 
                             <RadioButton
                                 android:id="@+id/rb_ratio_instagram"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
-                                android:text="@string/setting_element_instagram" />
+                                android:checked="@{vm.ratio == Ratio.INSTAGRAM}"
+                                android:text="@string/setting_element_instagram"
+                                android:textSize="15sp" />
+                        </RadioGroup>
+
+                        <!-- timer type -->
+                        <RadioGroup
+                            android:id="@+id/rg_timer_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <com.jess.wodtimer.common.view.componet.GroupTitleView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:title="@string/setting_group_timer_type" />
+
+                            <RadioButton
+                                android:id="@+id/rb_ratio_for_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
+                                android:checked="@{vm.timerType == TimerType.FOR_TIME}"
+                                android:text="@string/setting_element_timer_type_for_time"
+                                android:textSize="15sp" />
+
+                            <RadioButton
+                                android:id="@+id/rb_ratio_time_cap"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:checked="@{vm.timerType == TimerType.TIME_CAP}"
+                                android:text="@string/setting_element_timer_type_time_cap"
+                                android:textSize="15sp" />
+
+                            <RadioButton
+                                android:id="@+id/rb_ratio_amrap"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:checked="@{vm.timerType == TimerType.AMRAP}"
+                                android:text="@string/setting_element_timer_type_amrap"
+                                android:textSize="15sp" />
+
+                            <!--                            <RadioButton-->
+                            <!--                                android:id="@+id/rb_ratio_emom"-->
+                            <!--                                android:layout_width="match_parent"-->
+                            <!--                                android:layout_height="30dp"-->
+                            <!--                                android:checked="@{vm.timerType == TimerType.EMOM}"-->
+                            <!--                                android:text="@string/setting_element_timer_type_emom"-->
+                            <!--                                android:textSize="15sp" />-->
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/ti_timer_type_minute"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/brand_white"
+                                android:hint="@string/setting_element_timer_type_minute"
+                                app:boxStrokeColor="@color/brand_blue"
+                                app:boxStrokeErrorColor="@color/brand_red"
+                                app:errorTextColor="@color/brand_red"
+                                app:hintTextColor="@color/brand_blue"
+                                app:suffixText="@string/minute">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/et_timer_type_minute"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    android:maxLength="2"
+                                    android:maxLines="1"
+                                    android:text="@{String.valueOf(vm.timerMinute)}"
+                                    android:textSize="15sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
                         </RadioGroup>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -90,7 +169,8 @@
                                 android:gravity="top"
                                 android:inputType="textMultiLine"
                                 android:minLines="3"
-                                android:text="@{vm.title}" />
+                                android:text="@{vm.title}"
+                                android:textSize="15sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -114,7 +194,8 @@
                                 android:inputType="numberDecimal"
                                 android:maxLength="2"
                                 android:maxLines="1"
-                                android:text="@{String.valueOf(vm.countDown)}" />
+                                android:text="@{String.valueOf(vm.countDown)}"
+                                android:textSize="15sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
@@ -125,7 +206,7 @@
                             android:checked="@{vm.isSound()}"
                             android:paddingStart="5dp"
                             android:text="@string/setting_element_sound"
-                            android:textSize="17sp" />
+                            android:textSize="15sp" />
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/swc_date"
@@ -134,7 +215,7 @@
                             android:checked="@{vm.isDate()}"
                             android:paddingStart="5dp"
                             android:text="@string/setting_element_date"
-                            android:textSize="17sp" />
+                            android:textSize="15sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.core.widget.NestedScrollView>
             </androidx.appcompat.widget.LinearLayoutCompat>

@@ -12,7 +12,7 @@ object DateUtils {
      */
     fun getFormat(
         format: String = "yyyy.MM.dd E",
-        locale: Locale = Locale.getDefault()
+        locale: Locale = Locale.US
     ): String? {
         return SimpleDateFormat(format, locale).format(Date())
     }

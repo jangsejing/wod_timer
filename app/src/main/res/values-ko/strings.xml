@@ -2,6 +2,7 @@
 
     <string name="app_name">WODTimer</string>
     <string name="seconds">초</string>
+    <string name="minute">분</string>
     <string name="setting">설정</string>
 
     <string name="permission_denied_title">권한 거부</string>
@@ -22,5 +23,11 @@
     <string name="setting_group_ratio">비율</string>
     <string name="setting_element_general">일반</string>
     <string name="setting_element_instagram">Instagram (1:1)</string>
+    <string name="setting_group_timer_type">타이머</string>
+    <string name="setting_element_timer_type_for_time">For Time</string>
+    <string name="setting_element_timer_type_time_cap">Time Cap</string>
+    <string name="setting_element_timer_type_amrap">AMRAP</string>
+    <string name="setting_element_timer_type_emom">EMOM</string>
+    <string name="setting_element_timer_type_minute">시간</string>
     <string name="setting_element_date">날짜</string>
 </resources>

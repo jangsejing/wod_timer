@@ -9,18 +9,22 @@ class SettingViewModel @ViewModelInject constructor(
     private val dataSource: SettingDataSource
 ) : BaseViewModel() {
 
+    val ratio = dataSource.ratio
+    val timerType = dataSource.timerType
+    val timerMinute = dataSource.timerMinute
     val title = dataSource.title
     val countDown = dataSource.countDown
     val isSound = dataSource.isSound
     val isDate = dataSource.isDate
-    val ratio = dataSource.ratio
 
     fun getData() {
         dataSource.getData()
     }
 
     fun submit(
-        ratio: RecordConst.RATIO,
+        ratio: RecordConst.Ratio,
+        timerType: RecordConst.TimerType,
+        timerMinute: String?,
         title: String?,
         countDown: String?,
         isSound: Boolean,
@@ -32,8 +36,17 @@ class SettingViewModel @ViewModelInject constructor(
             RecordConst.DEFAULT_COUNTDOWN
         }
 
+        // 녹화시간
+        val minute = if (!timerMinute.isNullOrEmpty()) {
+            timerMinute.toInt()
+        } else {
+            RecordConst.MAX_RECORD_TIME
+        }
+
         dataSource.submit(
             ratio,
+            timerType,
+            minute,
             title,
             time,
             isSound,

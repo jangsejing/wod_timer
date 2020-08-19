@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
@@ -61,7 +60,7 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         // camera
         camera.run {
             setLifecycleOwner(this@RecordActivity)
-            videoMaxDuration = RecordConst.MAX_RECORD_TIME * 1000 // max 60 min
+            videoMaxDuration = RecordConst.MAX_RECORD_TIME * 60 * 1000 // max 60 min
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
                     Timber.d("onPictureTaken")
@@ -112,8 +111,6 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         vm.isPlay.observe(this, Observer {
             Timber.d("$it")
             if (it && !camera.isTakingVideo) {
-                // 비프음
-                soundManager.play(RecordConst.BEEP_PLAY)
                 // 녹화시작
                 camera.takeVideoSnapshot(MediaManager.getFile(this, MediaManager.MP4))
             } else {
@@ -132,14 +129,20 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         // 비율
         vm.ratio.observe(this, Observer {
             val ratio = when (it) {
-                RecordConst.RATIO.INSTAGRAM -> "1:1"
+                RecordConst.Ratio.INSTAGRAM -> "1:1"
                 else -> "1:0"
             }
             camera.dimensionRatio(ratio)
         })
 
+        // 비프음
         vm.isBeepShort.observe(this, Observer {
-            soundManager.play(RecordConst.BEEP_COUNTDOWN)
+            soundManager.play(SoundPoolManager.BEEP_SHORT)
+        })
+
+        // 비프음
+        vm.isBeepLong.observe(this, Observer {
+            soundManager.play(SoundPoolManager.BEEP_LONG)
         })
     }
 
@@ -161,8 +164,8 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
     override fun onStart() {
         super.onStart()
         soundManager.run {
-            add(RecordConst.BEEP_COUNTDOWN, R.raw.beep_coundown)
-            add(RecordConst.BEEP_PLAY, R.raw.beep_play)
+            add(SoundPoolManager.BEEP_SHORT, R.raw.beep_short)
+            add(SoundPoolManager.BEEP_LONG, R.raw.beep_long)
         }
     }
 
