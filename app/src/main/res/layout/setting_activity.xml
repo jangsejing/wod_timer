@@ -44,11 +44,35 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+                        <RadioGroup
+                            android:id="@+id/rg_ratio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.jess.wodtimer.common.view.componet.GroupTitleView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:title="@string/setting_group_ratio" />
+
+                            <RadioButton
+                                android:id="@+id/rb_ratio_general"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/setting_element_general" />
+
+                            <RadioButton
+                                android:id="@+id/rb_ratio_instagram"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:text="@string/setting_element_instagram" />
+                        </RadioGroup>
+
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:background="@color/brand_white"
                             android:hint="@string/setting_element_title"
                             app:boxStrokeColor="@color/brand_blue"
@@ -101,7 +125,16 @@
                             android:checked="@{vm.isSound()}"
                             android:paddingStart="5dp"
                             android:text="@string/setting_element_sound"
-                            android:textSize="17dp" />
+                            android:textSize="17sp" />
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/swc_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:checked="@{vm.isDate()}"
+                            android:paddingStart="5dp"
+                            android:text="@string/setting_element_date"
+                            android:textSize="17sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.core.widget.NestedScrollView>
             </androidx.appcompat.widget.LinearLayoutCompat>

@@ -5,12 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import com.jess.wodtimer.common.base.BaseDataSource
 import com.jess.wodtimer.common.base.BaseDataSourceImpl
 import com.jess.wodtimer.common.constant.RecordConst
-import com.jess.wodtimer.common.manager.PreferencesManager
+import com.jess.wodtimer.common.util.DateUtils
 import com.jess.wodtimer.di.provider.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.DateFormat
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -21,14 +23,16 @@ interface RecordDataSource : BaseDataSource {
 
     val settingDataSource: SettingDataSource
 
+    val date: LiveData<String>
     val countDown: LiveData<Int>
     val time: LiveData<Long>
     val isPlay: LiveData<Boolean>
     val isCountDown: LiveData<Boolean>
-    val isCountDownBeep: LiveData<Boolean>
+    val isBeepShort: LiveData<Boolean>
     var countDownTime: Int // 카운트 타임 시간
     var maxRepeatTime: Int // 맥스 시간
 
+    fun getDate()
     fun setData()
     fun reset()
     fun onStart()
@@ -46,6 +50,9 @@ class RecordDataSourceImpl @Inject constructor(
     override var countDownTime: Int = RecordConst.DEFAULT_COUNTDOWN // 카운트 다운 시간
     override var maxRepeatTime: Int = RecordConst.MAX_RECORD_TIME // 최대 1시간
 
+    private val _date = MutableLiveData<String>()
+    override val date: LiveData<String> get() = _date
+
     private val _countDown = MutableLiveData<Int>()
     override val countDown: LiveData<Int> get() = _countDown
 
@@ -58,8 +65,18 @@ class RecordDataSourceImpl @Inject constructor(
     private val _isCountDown = MutableLiveData<Boolean>()
     override val isCountDown: LiveData<Boolean> get() = _isCountDown
 
-    private val _isCountDownBeep = MutableLiveData<Boolean>()
-    override val isCountDownBeep: LiveData<Boolean> get() = _isCountDownBeep
+    private val _isBeepShort = MutableLiveData<Boolean>()
+    override val isBeepShort: LiveData<Boolean> get() = _isBeepShort
+
+    /**
+     * 날짜
+     */
+    override fun getDate() {
+        _date.value = DateUtils.getFormat(
+            "yy.MM.dd (E)",
+            Locale.getDefault()
+        )
+    }
 
     override fun setData() {
         settingDataSource.run {
@@ -94,7 +111,7 @@ class RecordDataSourceImpl @Inject constructor(
                 val countDown = countDownTime - it
                 _countDown.postValue(countDown)
                 if (countDown in 1..3) {
-                    _isCountDownBeep.postValue(true)
+                    _isBeepShort.postValue(true)
                 }
                 Timber.d("countDown $it")
 

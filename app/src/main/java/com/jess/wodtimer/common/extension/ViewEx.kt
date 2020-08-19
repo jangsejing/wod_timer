@@ -4,7 +4,9 @@ import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.record_activity.*
 import kotlin.math.roundToInt
 
 /**
@@ -72,4 +74,14 @@ fun View.setMargin(
         bottom
     )
     this.layoutParams = layoutParams
+}
+
+/**
+ * ConstraintLayout에 속한 View의 dimensionRatio 설정
+ */
+fun View.dimensionRatio(ratio: String = "1:0") {
+    val params = (this.layoutParams as ConstraintLayout.LayoutParams).apply {
+        dimensionRatio = ratio
+    }
+    this.layoutParams = params
 }

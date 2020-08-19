@@ -19,14 +19,19 @@ class RecordViewModel @ViewModelInject constructor(
     val time = dataSource.time
     val isPlay = dataSource.isPlay
     val isCountDown = dataSource.isCountDown
-    val isCountdownBeep = dataSource.isCountDownBeep
+    val isBeepShort = dataSource.isBeepShort
+    val date = dataSource.date
 
     val title = dataSource.settingDataSource.title
     val isSound = dataSource.settingDataSource.isSound
-
+    val ratio = dataSource.settingDataSource.ratio
+    val isDate = dataSource.settingDataSource.isDate
 
     init {
-        dataSource.reset()
+        dataSource.run {
+            getDate()
+            reset()
+        }
     }
 
     val countDown = dataSource.countDown

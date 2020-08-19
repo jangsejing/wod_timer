@@ -86,4 +86,51 @@ object DeviceUtils {
     ) {
         activity?.requestedOrientation = orientation
     }
+
+    /**
+     * 스크린 너비
+     *
+     * @param context
+     * @param percent 비율 (스크린의 비율 만큼 리턴)
+     * @return
+     */
+    fun getDisplayWidth(
+        context: Context?,
+        percent: Int = 0
+    ): Int {
+        context?.let {
+            val metrics = context.resources.displayMetrics
+            return if (percent > 0) {
+                metrics.widthPixels * percent / 100
+            }
+            else {
+                metrics.widthPixels
+            }
+        }
+        return 0
+    }
+
+
+    /**
+     * 스크린 높이
+     *
+     * @param context
+     * @param percent 비율 (스크린의 비율 만큼 리턴)
+     * @return
+     */
+    fun getDisplayHeight(
+        context: Context?,
+        percent: Int = 0
+    ): Int {
+        context?.let {
+            val metrics = context.resources.displayMetrics
+            return if (percent > 0) {
+                metrics.heightPixels * percent / 100
+            }
+            else {
+                metrics.heightPixels
+            }
+        }
+        return 0
+    }
 }

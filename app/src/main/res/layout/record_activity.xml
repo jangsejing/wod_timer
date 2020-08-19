@@ -20,8 +20,10 @@
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/brand_black"
         android:fitsSystemWindows="false"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:background="@color/brand_black_alpha_5">
 
         <com.otaliastudios.cameraview.CameraView
             android:id="@+id/camera"
@@ -30,89 +32,86 @@
             android:keepScreenOn="true"
             app:cameraAudio="on"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@color/brand_black_alpha_5">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="100dp"
-                android:layout_height="27dp"
-                android:layout_gravity="end"
-                android:layout_margin="10dp"
-                android:background="@drawable/img_watermark"
-                app:layout_drawOnPreview="true"
-                app:layout_drawOnVideoSnapshot="true" />
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_drawOnPreview="true"
                 app:layout_drawOnVideoSnapshot="true">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_watermark"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_drawOnPreview="true"
+                    app:layout_drawOnVideoSnapshot="true" />
+
+                <!-- 타이머 -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/cl_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/shp_rect_black_alpha_5"
+                    android:orientation="vertical"
+                    android:paddingStart="4dp"
+                    android:paddingTop="0dp"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <!-- 타이머 -->
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/cl_timer"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/shp_rect_black_alpha_5"
-                        android:orientation="vertical"
-                        android:paddingStart="7dp"
-                        android:paddingTop="1dp"
-                        android:paddingEnd="7dp"
-                        android:paddingBottom="3dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:textColor="@color/brand_white"
+                        android:textSize="24sp"
+                        bind:timeFormat="@{vm.time}"
+                        tools:text="00:00" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/brand_white"
-                            android:textSize="24sp"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            bind:timeFormat="@{vm.time}"
-                            tools:text="00:00" />
+                    <include
+                        layout="@layout/record_divider"
+                        android:visibility="@{vm.isDate() ? View.VISIBLE : View.GONE}"
+                        tools:visibility="visible" />
 
-                        <View
-                            android:id="@+id/v_timer_divider"
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="3dp"
-                            android:background="#3dffffff"
-                            android:visibility="@{!TextUtils.isEmpty(vm.title) ? View.VISIBLE : View.GONE}"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_time"
-                            tools:visibility="visible" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.date}"
+                        android:textColor="@color/brand_white"
+                        android:textSize="14sp"
+                        android:visibility="@{vm.isDate() ? View.VISIBLE : View.GONE}"
+                        tools:text="20.08.19 (수)"
+                        tools:visibility="visible" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{vm.title}"
-                            android:textColor="@color/brand_white"
-                            android:textSize="14sp"
-                            android:visibility="@{!TextUtils.isEmpty(vm.title) ? View.VISIBLE : View.GONE}"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/v_timer_divider"
-                            tools:text="Jess\nSpyder Championship\nPull Up, Burpee, Toe to Bar"
-                            tools:visibility="visible" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <include
+                        layout="@layout/record_divider"
+                        android:visibility="@{!TextUtils.isEmpty(vm.title) ? View.VISIBLE : View.GONE}"
+                        tools:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.title}"
+                        android:textColor="@color/brand_white"
+                        android:textSize="14sp"
+                        android:visibility="@{!TextUtils.isEmpty(vm.title) ? View.VISIBLE : View.GONE}"
+                        tools:text="Jess\nSpyder Championship\nPull Up, Burpee, Toe to Bar"
+                        tools:visibility="visible" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.otaliastudios.cameraview.CameraView>
 
@@ -121,29 +120,30 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingBottom="20dp"
             android:shadowColor="@color/brand_black_alpha_5"
             android:shadowDx="5.0"
             android:shadowDy="5.0"
             android:shadowRadius="5.0"
             android:text="@{String.valueOf(vm.countDown)}"
             android:textColor="@color/brand_white"
-            android:textSize="200sp"
+            android:textSize="150sp"
             android:visibility="@{vm.countDown > 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/cl_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/camera"
             tools:text="10" />
 
         <View
             android:id="@+id/v_watermark"
-            android:layout_width="100dp"
-            android:layout_height="27dp"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
             android:layout_gravity="end"
             android:layout_margin="10dp"
-            android:background="?attr/selectableItemBackground"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/camera" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_bottom"

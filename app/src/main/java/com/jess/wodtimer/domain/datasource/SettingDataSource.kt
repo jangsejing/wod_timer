@@ -15,16 +15,20 @@ import javax.inject.Inject
  */
 interface SettingDataSource : BaseDataSource {
 
+    val ratio: LiveData<RecordConst.RATIO>
     val title: LiveData<String?>
     val countDown: LiveData<Int>
     val isSound: LiveData<Boolean>
+    val isDate: LiveData<Boolean>
 
     fun getData()
 
     fun submit(
+        ratio: RecordConst.RATIO,
         title: String? = null,
         countDown: Int = RecordConst.DEFAULT_COUNTDOWN,
-        isSound: Boolean = true
+        isSound: Boolean = true,
+        isDate: Boolean = true
     )
 }
 
@@ -32,6 +36,9 @@ class SettingDataSourceImpl @Inject constructor(
     override val dispatcher: DispatcherProvider,
     private val preferencesManager: PreferencesManager
 ) : BaseDataSourceImpl(), SettingDataSource {
+
+    private val _ratio = MutableLiveData<RecordConst.RATIO>()
+    override val ratio: LiveData<RecordConst.RATIO> get() = _ratio
 
     private val _title = MutableLiveData<String?>()
     override val title: LiveData<String?> get() = _title
@@ -42,8 +49,15 @@ class SettingDataSourceImpl @Inject constructor(
     private val _isSound = MutableLiveData<Boolean>()
     override val isSound: LiveData<Boolean> get() = _isSound
 
+    private val _isDate = MutableLiveData<Boolean>()
+    override val isDate: LiveData<Boolean> get() = _isDate
+
     override fun getData() {
         preferencesManager.run {
+            _ratio.value = RecordConst.RATIO.values()[getInt(
+                RecordConst.PREF_RECORD_RATIO,
+                RecordConst.RATIO.GENERAL.ordinal
+            )]
             _title.value = getString(RecordConst.PREF_RECORD_TITLE)
             _countDown.value =
                 getInt(
@@ -51,14 +65,23 @@ class SettingDataSourceImpl @Inject constructor(
                     RecordConst.DEFAULT_COUNTDOWN
                 )
             _isSound.value = getBoolean(RecordConst.PREF_RECORD_IS_SOUND, true)
+            _isDate.value = getBoolean(RecordConst.PREF_RECORD_IS_DATE, true)
         }
     }
 
-    override fun submit(title: String?, countDown: Int, isSound: Boolean) {
+    override fun submit(
+        ratio: RecordConst.RATIO,
+        title: String?,
+        countDown: Int,
+        isSound: Boolean,
+        isDate: Boolean
+    ) {
         preferencesManager.run {
+            put(RecordConst.PREF_RECORD_RATIO, ratio.ordinal)
             put(RecordConst.PREF_RECORD_TITLE, title)
             put(RecordConst.PREF_RECORD_COUNTDOWN, countDown)
             put(RecordConst.PREF_RECORD_IS_SOUND, isSound)
+            put(RecordConst.PREF_RECORD_IS_DATE, isDate)
         }
     }
 }

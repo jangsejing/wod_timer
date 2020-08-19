@@ -6,4 +6,10 @@
         <attr name="title" format="string" />
     </declare-styleable>
 
+    <!-- 헤더 -->
+    <declare-styleable name="GroupTitleView">
+        <attr name="title" />
+    </declare-styleable>
+
+
 </resources>

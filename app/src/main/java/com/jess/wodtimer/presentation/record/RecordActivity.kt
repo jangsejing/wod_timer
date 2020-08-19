@@ -12,10 +12,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
 import com.jess.wodtimer.common.constant.RecordConst
+import com.jess.wodtimer.common.extension.dimensionRatio
 import com.jess.wodtimer.common.extension.setMargin
 import com.jess.wodtimer.common.manager.MediaManager
 import com.jess.wodtimer.common.manager.PermissionManager
@@ -122,11 +124,21 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
             }
         })
 
+        // 녹음
         vm.isSound.observe(this, Observer {
             camera.playSounds = it
         })
 
-        vm.isCountdownBeep.observe(this, Observer {
+        // 비율
+        vm.ratio.observe(this, Observer {
+            val ratio = when (it) {
+                RecordConst.RATIO.INSTAGRAM -> "1:1"
+                else -> "1:0"
+            }
+            camera.dimensionRatio(ratio)
+        })
+
+        vm.isBeepShort.observe(this, Observer {
             soundManager.play(RecordConst.BEEP_COUNTDOWN)
         })
     }
