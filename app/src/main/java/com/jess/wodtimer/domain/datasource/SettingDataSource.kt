@@ -9,6 +9,7 @@ import com.jess.wodtimer.common.base.BaseDataSourceImpl
 import com.jess.wodtimer.common.constant.RecordConst
 import com.jess.wodtimer.common.manager.PreferencesManager
 import com.jess.wodtimer.di.provider.DispatcherProvider
+import com.otaliastudios.cameraview.controls.Facing
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 import kotlin.concurrent.timer
@@ -19,6 +20,7 @@ import kotlin.concurrent.timer
  */
 interface SettingDataSource : BaseDataSource {
 
+    val facing: LiveData<Facing>
     val ratio: LiveData<RecordConst.Ratio>
     val timerType: LiveData<RecordConst.TimerType>
     val timerTypeDisplay: LiveData<String>
@@ -31,6 +33,7 @@ interface SettingDataSource : BaseDataSource {
     fun getData()
 
     fun submit(
+        facing: Facing = Facing.BACK,
         ratio: RecordConst.Ratio = RecordConst.Ratio.GENERAL,
         timerType: RecordConst.TimerType = RecordConst.TimerType.FOR_TIME,
         timerMinute: Int = RecordConst.MIN_RECORD_TIME,
@@ -46,6 +49,9 @@ class SettingDataSourceImpl @Inject constructor(
     override val dispatcher: DispatcherProvider,
     private val preferencesManager: PreferencesManager
 ) : BaseDataSourceImpl(), SettingDataSource {
+
+    private val _facing = MutableLiveData<Facing>()
+    override val facing: LiveData<Facing> get() = _facing
 
     private val _ratio = MutableLiveData<RecordConst.Ratio>()
     override val ratio: LiveData<RecordConst.Ratio> get() = _ratio
@@ -73,6 +79,13 @@ class SettingDataSourceImpl @Inject constructor(
 
     override fun getData() {
         preferencesManager.run {
+
+            // 카메라 망향
+            _facing.value = Facing.values()[getInt(
+                RecordConst.PREF_RECORD_FACING,
+                Facing.BACK.ordinal
+            )]
+
             // 비율
             _ratio.value = RecordConst.Ratio.values()[getInt(
                 RecordConst.PREF_RECORD_RATIO,
@@ -111,6 +124,7 @@ class SettingDataSourceImpl @Inject constructor(
     }
 
     override fun submit(
+        facing: Facing,
         ratio: RecordConst.Ratio,
         timerType: RecordConst.TimerType,
         timerMinute: Int,
@@ -127,6 +141,7 @@ class SettingDataSourceImpl @Inject constructor(
 //        }
 
         preferencesManager.run {
+            put(RecordConst.PREF_RECORD_FACING, facing.ordinal)
             put(RecordConst.PREF_RECORD_RATIO, ratio.ordinal)
             put(RecordConst.PREF_RECORD_TIMER_TYPE, timerType.ordinal)
             put(RecordConst.PREF_RECORD_TIMER_MINUTE, timerMinute)

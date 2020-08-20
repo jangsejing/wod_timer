@@ -27,6 +27,7 @@ class RecordViewModel @ViewModelInject constructor(
     val isBeepLong = dataSource.isBeepLong
 
     // 설정
+    val facing = dataSource.settingDataSource.facing
     val ratio = dataSource.settingDataSource.ratio
     val timerType = dataSource.settingDataSource.timerType
     val timerTypeDisplay = dataSource.settingDataSource.timerTypeDisplay

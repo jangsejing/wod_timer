@@ -20,6 +20,9 @@
     <string name="setting_element_countdown">카운트다운</string>
     <string name="setting_element_countdown_valid">5~60초 사이를 입력해주세요.</string>
     <string name="setting_element_sound">녹음</string>
+    <string name="setting_group_facing">카메라 방향</string>
+    <string name="setting_element_front">전면</string>
+    <string name="setting_element_back">후면</string>
     <string name="setting_group_ratio">비율</string>
     <string name="setting_element_general">일반</string>
     <string name="setting_element_instagram">Instagram (1:1)</string>

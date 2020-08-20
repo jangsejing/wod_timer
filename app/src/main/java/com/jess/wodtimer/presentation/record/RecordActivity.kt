@@ -28,6 +28,7 @@ import com.jess.wodtimer.presentation.setting.SettingActivity
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.VideoResult
+import com.otaliastudios.cameraview.controls.Facing
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.record_activity.*
 import timber.log.Timber
@@ -124,6 +125,10 @@ class RecordActivity : BaseActivity<RecordActivityBinding, RecordViewModel>(),
         // 녹음
         vm.isSound.observe(this, Observer {
             camera.playSounds = it
+        })
+
+        vm.facing.observe(this, Observer {
+            camera.facing = it
         })
 
         // 비율

@@ -12,6 +12,7 @@ import com.jess.wodtimer.R
 import com.jess.wodtimer.common.base.BaseActivity
 import com.jess.wodtimer.common.constant.RecordConst
 import com.jess.wodtimer.databinding.SettingActivityBinding
+import com.otaliastudios.cameraview.controls.Facing
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.header_view.*
 import kotlinx.android.synthetic.main.setting_activity.*
@@ -27,6 +28,7 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
     override val layoutRes get() = R.layout.setting_activity
     override val viewModelClass get() = SettingViewModel::class
 
+    private var facing = Facing.BACK
     private var ratio = RecordConst.Ratio.GENERAL
     private var timerType = RecordConst.TimerType.FOR_TIME
 
@@ -47,6 +49,14 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
     }
 
     private fun initListener() {
+        rg_facing.setOnCheckedChangeListener { radioGroup, i ->
+            facing = if (i == R.id.rb_facing_front) {
+                Facing.FRONT
+            } else {
+                Facing.BACK
+            }
+        }
+
         rg_ratio.setOnCheckedChangeListener { radioGroup, i ->
             ratio = if (i == R.id.rb_ratio_instagram) {
                 RecordConst.Ratio.INSTAGRAM
@@ -58,15 +68,9 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
         rg_timer_type.setOnCheckedChangeListener { radioGroup, i ->
             ti_timer_type_minute.visibility = View.VISIBLE
             timerType = when (i) {
-                R.id.rb_ratio_time_cap -> {
-                    RecordConst.TimerType.TIME_CAP
-                }
-                R.id.rb_ratio_amrap -> {
-                    RecordConst.TimerType.AMRAP
-                }
-//                R.id.rb_ratio_emom -> {
-//                    RecordConst.TimerType.EMOM
-//                }
+                R.id.rb_timer_type_time_cap -> RecordConst.TimerType.TIME_CAP
+                R.id.rb_timer_type_amrap -> RecordConst.TimerType.AMRAP
+//                R.id.rb_ratio_emom -> RecordConst.TimerType.EMOM
                 else -> {
                     ti_timer_type_minute.visibility = View.GONE
                     RecordConst.TimerType.FOR_TIME
@@ -83,6 +87,7 @@ class SettingActivity : BaseActivity<SettingActivityBinding, SettingViewModel>()
 
             R.id.bt_submit -> {
                 vm.submit(
+                    facing,
                     ratio,
                     timerType,
                     et_timer_type_minute.text.toString(),

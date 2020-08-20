@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.otaliastudios.cameraview.controls.Facing" />
+
         <import type="com.jess.wodtimer.common.constant.RecordConst.Ratio" />
 
         <import type="com.jess.wodtimer.common.constant.RecordConst.TimerType" />
@@ -48,11 +50,41 @@
                         android:paddingStart="24dp"
                         android:paddingEnd="24dp">
 
+                        <!-- 카메라 방향 -->
+                        <RadioGroup
+                            android:id="@+id/rg_facing"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.jess.wodtimer.common.view.componet.GroupTitleView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:title="@string/setting_group_facing" />
+
+                            <RadioButton
+                                android:id="@+id/rb_facing_back"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
+                                android:checked="@{vm.facing == Facing.BACK}"
+                                android:text="@string/setting_element_back"
+                                android:textSize="15sp" />
+
+                            <RadioButton
+                                android:id="@+id/rb_facing_front"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:checked="@{vm.facing == Facing.FRONT}"
+                                android:text="@string/setting_element_front"
+                                android:textSize="15sp" />
+                        </RadioGroup>
+
                         <!-- 비율 -->
                         <RadioGroup
                             android:id="@+id/rg_ratio"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
 
                             <com.jess.wodtimer.common.view.componet.GroupTitleView
                                 android:layout_width="wrap_content"
@@ -90,7 +122,7 @@
                                 app:title="@string/setting_group_timer_type" />
 
                             <RadioButton
-                                android:id="@+id/rb_ratio_for_time"
+                                android:id="@+id/rb_timer_type_for_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:layout_marginTop="5dp"
@@ -99,7 +131,7 @@
                                 android:textSize="15sp" />
 
                             <RadioButton
-                                android:id="@+id/rb_ratio_time_cap"
+                                android:id="@+id/rb_timer_type_time_cap"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:checked="@{vm.timerType == TimerType.TIME_CAP}"
@@ -107,7 +139,7 @@
                                 android:textSize="15sp" />
 
                             <RadioButton
-                                android:id="@+id/rb_ratio_amrap"
+                                android:id="@+id/rb_timer_type_amrap"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:checked="@{vm.timerType == TimerType.AMRAP}"

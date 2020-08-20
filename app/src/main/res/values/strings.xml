@@ -20,6 +20,9 @@
     <string name="setting_element_countdown">CountDown</string>
     <string name="setting_element_countdown_valid">Please enter between 5 and 60 seconds.</string>
     <string name="setting_element_sound">Sound Record</string>
+    <string name="setting_group_facing">Facing</string>
+    <string name="setting_element_front">Front</string>
+    <string name="setting_element_back">Back</string>
     <string name="setting_group_ratio">Ratio</string>
     <string name="setting_element_general">General</string>
     <string name="setting_element_instagram">Instagram (1:1)</string>

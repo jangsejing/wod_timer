@@ -4,11 +4,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import com.jess.wodtimer.common.base.BaseViewModel
 import com.jess.wodtimer.common.constant.RecordConst
 import com.jess.wodtimer.domain.datasource.SettingDataSource
+import com.otaliastudios.cameraview.controls.Facing
 
 class SettingViewModel @ViewModelInject constructor(
     private val dataSource: SettingDataSource
 ) : BaseViewModel() {
 
+    val facing = dataSource.facing
     val ratio = dataSource.ratio
     val timerType = dataSource.timerType
     val timerMinute = dataSource.timerMinute
@@ -22,6 +24,7 @@ class SettingViewModel @ViewModelInject constructor(
     }
 
     fun submit(
+        facing: Facing,
         ratio: RecordConst.Ratio,
         timerType: RecordConst.TimerType,
         timerMinute: String?,
@@ -44,6 +47,7 @@ class SettingViewModel @ViewModelInject constructor(
         }
 
         dataSource.submit(
+            facing,
             ratio,
             timerType,
             minute,
