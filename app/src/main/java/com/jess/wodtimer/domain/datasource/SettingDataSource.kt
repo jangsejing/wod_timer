@@ -86,7 +86,11 @@ class SettingDataSourceImpl @Inject constructor(
             )]
             _timerType.value = type
             _timerTypeDisplay.value = getTimerTypeDisplay(type)
-            _timerMinute.value = getInt(RecordConst.PREF_RECORD_TIMER_MINUTE)
+            _timerMinute.value =
+                getInt(
+                    RecordConst.PREF_RECORD_TIMER_MINUTE,
+                    RecordConst.MIN_RECORD_TIME
+                )
 
             // 제목
             _title.value = getString(RecordConst.PREF_RECORD_TITLE)
