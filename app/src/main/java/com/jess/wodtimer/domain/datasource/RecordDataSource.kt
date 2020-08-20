@@ -88,9 +88,23 @@ class RecordDataSourceImpl @Inject constructor(
     override fun setData() {
         settingDataSource.run {
             getData()
+
+            // 카운트다운 시간
             countDown.value?.let {
                 countDownTime = it
             }
+
+            // amrap, time cap 일경우 시간 세팅
+            val timerType = timerType.value
+            val timerMinute = timerMinute.value ?: 0
+            val time = if (timerType == RecordConst.TimerType.AMRAP
+                || timerType == RecordConst.TimerType.TIME_CAP
+            ) {
+                (timerMinute * 60 * 1000).toLong()
+            } else {
+                0
+            }
+            _time.postValue(time)
         }
     }
 
