@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 //        registerForActivityResult(RequestPermission()) { isGranted ->
 //            Timber.d("isGranted $isGranted")
 //        }.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        // code review 2
     }
 
 }
