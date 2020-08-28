@@ -174,7 +174,7 @@ class RecordDataSourceImpl @Inject constructor(
      */
     override fun forTime() {
         CoroutineScope(dispatcher.default).launch {
-            repeat(RecordConst.MAX_RECORD_TIME) {
+            repeat(RecordConst.MAX_RECORD_TIME * 60) {
                 _time.postValue((it * 1000).toLong())
                 delay(1000)
             }
