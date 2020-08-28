@@ -39,17 +39,20 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_drawOnPreview="true"
                 app:layout_drawOnVideoSnapshot="true">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="125dp"
+                    android:id="@+id/iv_real_logo"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_margin="10dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/img_watermark"
+                    android:alpha="0.5"
+                    android:background="@color/brand_white"
+                    android:src="@mipmap/ic_launcher"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_drawOnPreview="true"
@@ -67,7 +70,6 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="4dp"
                     android:paddingBottom="3dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -149,8 +151,8 @@
 
         <View
             android:id="@+id/v_watermark"
-            android:layout_width="130dp"
-            android:layout_height="35dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="end"
             android:layout_margin="10dp"
             app:layout_constraintRight_toRightOf="parent"
